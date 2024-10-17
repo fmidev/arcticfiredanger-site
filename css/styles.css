@@ -61,15 +61,31 @@ header{
 
 #labels {
     position:relative;
-    font-size: 10px;
+    font-size: 15px;
     width: 95%;
-    height: 45px;
+    height: 15px;
     text-align: left;
     /*margin-left: 14px;
     margin-left: 60px;*/
     margin-right: auto;
     margin-left: auto;
+    text-align: center;
 }
+
+#labels_cems, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {
+    position:relative;
+    font-size: 15px;
+    width: 95%;
+    height: 15px;
+    text-align: left;
+    /*margin-left: 14px;
+    margin-left: 60px;*/
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+
 
 #dynamic-control, #date-control, #date-value-control {
     display: inline-block;
@@ -125,10 +141,10 @@ header{
     #harvestability-legend { margin-bottom: 55px; }
 }
 @media only screen and (max-width: 931px){
-    #labels { height: 55px; }
+    /* #labels { height: 55px; } */
  }
 @media only screen and (max-width: 774px){
-    #labels { height: 70px; }
+    /* #labels { height: 70px; } */
     header { 
         background-image: url(../img/logos.png);
         background-size: 212px; 
@@ -154,19 +170,19 @@ header{
     h1{ font-size: 4.7vw; }
  }
 @media only screen and (max-width: 657px){
-    #labels { height: 80px; }
+    /* #labels { height: 80px; } */
  }
 @media only screen and (max-width: 599px){
     #harvestability-legend { margin-bottom: 70px; }
  }
 @media only screen and (max-width: 570px){
-    #labels { height: 90px; }
+    /* #labels { height: 90px; } */
  }
 @media only screen and (max-width: 498px){
     .slider { width: 33vw; }
 }
 @media only screen and (max-width: 504px){
-    #labels { height: 105px; }
+    /* #labels { height: 105px; } */
  }
 @media only screen and (max-width: 480px){
     header{ background-size: 48%; }
@@ -176,30 +192,30 @@ header{
     #altcolors { float: none; margin-top: 5px;}
 }
 @media only screen and (max-width: 450px){
-    #labels { height: 120px; }
+    /* #labels { height: 120px; } */
  }
 @media only screen and (max-width: 439px){
     #harvestability-legend { margin-bottom: 85px; }
  }
 @media only screen and (max-width: 419px){
-    #labels { height: 130px; }
+    /* #labels { height: 130px; } */
  }
 @media only screen and (max-width: 389px){
     #harvestability-legend { margin-bottom: 100px; }
 }
 @media only screen and (max-width: 378px){
     #harvestability-legend { margin-bottom: 110px; }
-    #labels { height: 140px; }
+    /* #labels { height: 140px; } */
     #labelsB { height: 30px; }
 }
 @media only screen and (max-width: 365px){
-    #labels { height: 150px; }
+    /* #labels { height: 150px; } */
 }
 @media only screen and (max-width: 358px){
     .slider { width: 25vw; }
 }
 @media only screen and (max-width: 313px){
-    #labels { height: 180px; }
+    /* #labels { height: 180px; } */
 }
 @media only screen and (max-width: 308px){
     #harvestability-legend { margin-bottom: 120px; }
@@ -240,6 +256,98 @@ header{
 #graphB .dygraph-axis-label.dygraph-axis-label-2 { color: rgb(0, 97, 0); }
 */
 
+#graph_cems {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_cems .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_cems .dygraph-title { font-size: 18px; }
+#graph_cems .dygraph-ylabel { font-size: 12px; }
+
+#graph_duff {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_duff .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_duff .dygraph-title { font-size: 18px; }
+#graph_duff .dygraph-ylabel { font-size: 12px; }
+
+#graph_firebuildup {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_firebuildup .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_firebuildup .dygraph-title { font-size: 18px; }
+#graph_firebuildup .dygraph-ylabel { font-size: 12px; }
+
+#graph_fireweather {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_fireweather .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_fireweather .dygraph-title { font-size: 18px; }
+#graph_fireweather .dygraph-ylabel { font-size: 12px; }
+
+#graph_fuelmoisture {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_fuelmoisture .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_fuelmoisture .dygraph-title { font-size: 18px; }
+#graph_fuelmoisture .dygraph-ylabel { font-size: 12px; }
+
+#graph_firespread {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_firespread .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_firespread .dygraph-title { font-size: 18px; }
+#graph_firespread .dygraph-ylabel { font-size: 12px; }
+
+#graph_fireseverity {
+    position: relative;
+    height: 120px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_fireseverity .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_fireseverity .dygraph-title { font-size: 18px; }
+#graph_fireseverity .dygraph-ylabel { font-size: 12px; }
+
+
 #graphsw {
     position: relative;
     height: 240px;
@@ -249,11 +357,8 @@ header{
     margin-bottom: 20px;
     text-align: center;
 }
-
 #graphsw .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
-
-#graphsw .dygraph-title { font-size: 18px; align: left; }
-
+#graphsw .dygraph-title { font-size: 18px; }
 #graphsw .dygraph-ylabel { font-size: 12px; }
 
 #graphst {
@@ -268,7 +373,7 @@ header{
 
 #graphst .dygraph-label { font-family: Helvetica, Arial, sans-serif;}
 
-#graphst .dygraph-title { font-size: 18px; align: left; }
+#graphst .dygraph-title { font-size: 18px; }
 
 #graphst .dygraph-ylabel { font-size: 12px; }
 
@@ -284,7 +389,7 @@ header{
 
 #graphsh .dygraph-label { font-family: Helvetica, Arial, sans-serif;}
 
-#graphsh .dygraph-title { font-size: 18px; align: left; }
+#graphsh .dygraph-title { font-size: 18px; }
 
 #graphsh .dygraph-ylabel { font-size: 12px; }
 

@@ -1,303 +1,54 @@
+const param_time = "utctime";
+const param_cems = "DRTCODE:CEMS:5071:2:0:0";
+const param_duff = "DUFMCODE:CEMS:5071:2:0:0";
+const param_firebuildup = "FBUPINX:CEMS:5071:2:0:0";
+const param_fireweather = "FWINX:CEMS:5071:2:0:0";
+const param_fuelmoisture = "FFMCODE:CEMS:5071:2:0:0";
+const param_firespread = "INFSINX:CEMS:5071:2:0:0";
+const param_fireseverity = "FDSRTE:CEMS:5071:2:0:0";
+
 function drawtimeseries() {
-    // Inside Finland, seasonal snow depth and soil wetness combined and scaled with SMARTOBS/SMARTMET observations
 
-    // Fetch soil wetness data
-    // var dataUrlSW = "https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,SWI2-0TO1:SWI:5059,SWVL2-M3M3:SMARTMET:5015" + SWensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&precision=full&source=grid&timeformat=sql&tz=utc";
-    var dataUrlSW = "https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,SWI2-0TO1:SWI:5059,SWVL2-M3M3:SMARTMET:5015,SWI2-0TO1:EDTE:5068" + SWensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&precision=full&source=grid&timeformat=sql&tz=utc";
-    $.getJSON(dataUrlSW, function (dataSW) {
-
-        // Find the latest SWVL2-M3M3:SMARTMET value
-        let smartmetIdx = -1;
-
-        for (let i = 0; i < dataSW.length; i++) {
-            if (dataSW[i]["SWVL2-M3M3:SMARTMET:5015"] !== null) {
-                smartmetIdx = i;
-            }
-        }
-
-        if (smartmetIdx == -1) {
-            drawOutsideFinland()
-        } else {
-
-            // // // Fix soilwetnessDay for the WMS-layers using smartmetIdx
-
-            // let smartmetIdxDateYear = dataSW[smartmetIdx]["utctime"].substr(0, 4);
-            // let smartmetIdxDateMonth = dataSW[smartmetIdx]["utctime"].substr(5, 2);
-            // let smartmetIdxDateDay = dataSW[smartmetIdx]["utctime"].substr(8, 2);
-
-            // let smartmetIdxDate = new Date(Date.UTC(smartmetIdxDateYear, smartmetIdxDateMonth - 1, smartmetIdxDateDay));
-
-            // if (smartmetIdxDate.getTime() !== soilwetnessDate.getTime()) {
-            //     soilwetnessDate = smartmetIdxDate;
-            // }
-
-            // let smartmetDate = new Date(dataSW[smartmetIdx]["utctime"]);
-            // Date format that works also in mobile safari
-            // let smartmetDate = new Date(dataSW[smartmetIdx]["utctime"].replace(/-/g, "/"));
-
-            // // Scale seasonal soil wetness using SMARTMET-forecast
-            // let dataSWscaled = [];
-            // // dataSWscaled = scalingFunction(dataSW, SWensemblelist, smartmetIdx, perturbations, "SWVL2-M3M3:SMARTMET:5015");
-            // dataSWscaled = dataSW;
-
-
-            // Fetch snow depth data
-            var dataUrlSH = "https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,HSNOW-M:SMARTOBS:13:4,HSNOW-M:SMARTMET:5027," + SHensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&precision=full&source=grid&timeformat=sql&tz=utc";
-            $.getJSON(dataUrlSH, function (dataSH) {
-
-                // Find the latest HSNOW-M:SMARTOBS value
-                let smartobsIdx = -1;
-
-                for (let i = 0; i < dataSH.length; i++) {
-                    if (dataSH[i]["HSNOW-M:SMARTOBS:13:4"] !== null) {
-                        smartobsIdx = i;
-                    }
-                }
-
-                let smartobsDate = new Date(dataSH[smartobsIdx]["utctime"]);
-
-                // Scale seasonal snow forecast using SMARTOBS-observations
-                let dataSHscaled = [];
-                dataSHscaled = scalingFunction(dataSH, SHensemblelist, smartobsIdx, perturbations, "HSNOW-M:SMARTOBS:13:4", "HSNOW-M:SMARTMET:5027");
-
-
-                // // // // Summer index from the scaled seasonal soil wetness
-                // let summer1series = [];
-                // summer1series = harvidx(0.4, dataSWscaled, SWensemblelist, perturbations, "SWVL2-M3M3:SMARTMET:5015")
-
-                // // // Winter index from the scaled seasonal snow depth
-                let winter1series = [];
-                winter1series = ensover(0.4, 0.9, dataSHscaled, SHensemblelist, perturbations, "HSNOW-M:SMARTOBS:13:4")
-
-                // const param2 = "HARVIDX{0.55;SWI2-0TO1:ECXSF:5062:1:0:0:0-50}";
-                // const param3 = "HARVIDX{273;TSOIL-K:ECBSF:::7:3:1-50;TSOIL-K:ECBSF:::7:1:0}";
-                // const param5 = "HARVIDX{0.55;SWI2-0TO1:EDTE:5068}";
-                // const param7 = "ensover{0.4;0.9;HSNOW-M:SMARTMET:5027}";
-                // const param8 = "ensover{0.4;0.9;HSNOW-M:SMARTOBS:13:4}";
-
-                // Fetch rest of the trafficability index series
-                // graphLoad = $.getJSON("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,SWI2-0TO1:SWI:5059,SWVL2-M3M3:SMARTMET:5015," + param2 + "," + param3 + "," + param5 + "," + param7 + "," + param8 + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
-                graphLoad = $.getJSON("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime," + param2 + "," + param3 + "," + param5 + "," + param7 + "," + param8 + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
-                    function (data) {
-                        var graphdata = [];
-                        for (i = 0, k = 0; i < data.length; i++) {
-                            var summer1, summer2, winter1, winter2;
-
-                            // // Seasonal summer index scaled with observations (SWI2-0TO1:ECXSF & ?)
-                            // if (summer1series.length == data.length) { summer1 = summer1series[i]; }
-                            // else { summer1 = 'nan'; }
-
-                            // Seasonal summer index (SWI2:ECXSF)
-                            if (data[i][param2] !== null) { summer1 = data[i][param2]; }
-                            else { summer1 = 'nan'; }
-
-                            // Seasonal winter index, combined and scaled with observations (HSNOW-M:ECBSF & HSNOW-M:SMARTOBS, TSOIL-K:ECBSF)                     
-                            if (data[i][param8] !== null) { winter1 = Math.max(data[i][param3], data[i][param8]); }
-                            else if (data[i][param3] !== null || winter1series[i] !== null && winter1series.length == data.length) 
-                                { winter1 = Math.max(data[i][param3], winter1series[i]); }
-                            else { winter1 = 'nan'; }
-                            
-                            // 10 day forecast summer index (SWI2:EDTE)                      
-                            if (data[i][param5] !== null) { summer2 = data[i][param5]; }
-                            else { summer2 = 'nan'; }
-
-                            // // 10 day forecast winter index (HSNOW-M:SMARTOBS, HSNOW-M:SMARTMET, TSOIL-K:ECBSF)                      
-                            // First HSNOW-M:SMARTOBS and then HSNOW-M:SMARTMET
-                            if (data[i][param8] !== null) { winter2 = Math.max(data[i][param3], data[i][param8]); }
-                            else if (data[i][param7] !== null) { winter2 = Math.max(data[i][param3], data[i][param7]); }
-                            else { winter2 = 'nan'; }
-
-                            // Combined trafficability index time series
-                            if (summer1 !== 'nan' || winter1 !== 'nan' || summer2 !== 'nan' || winter2 !== 'nan') {
-                                graphdata[k] = [new Date(data[i][param1]), summer1, winter1, summer2, winter2];
-                                k++;
-                            }
-                        }
-
-                        if (!dateFixed && data.length > 0) {
-                            // Fix the last date of dateslider to timeseries data
-                            var maxDate = new Date(data[data.length - 1][param1]);
-                            var maxDays = Math.ceil((maxDate - startDate) / 1000 / 60 / 60 / 24);
-                            if (dateslider.value > maxDays) {
-                                dateslider.value = maxDays;
-                                sliderDate = new Date(startDate);
-                                sliderDate.setUTCDate(sliderDate.getUTCDate() + Number(dateslider.value));
-                                dateoutput.innerHTML = sliderDate.toLocaleDateString();
-                                map.timeDimension.setCurrentTime(sliderDate.getTime());
-                            }
-                            dateslider.max = maxDays;
-                            dateFixed = true;
-                        }
-
-                        if (graphdata.length > 0) {
-                            gB = new Dygraph(
-                                document.getElementById("graphB"),
-                                graphdata,
-                                dyGraphBOptions
-                            );
-                            document.getElementById("graphB").style = "line-height: 1;";
-                        } else {
-                            document.getElementById("graphB").innerHTML = "Error loading data";
-                        }
-
-                        // // Plot scaled soil wetness time series
-                        // var dataSW2 = [];
-                        // for (k = 0; k < dataSWscaled.length; k++) {
-                        //     dataSW2[k] = [];
-                        //     // Date format that works also in mobile safari
-                        //     dataSW2[k][0] = new Date(dataSWscaled[k]["utctime"].replace(/-/g, "/"));
-                        //     for (i = 0; i <= perturbations; i = i + 1) {
-                        //         // Remove seasonal forecast before startDate_smartobs-1day
-                        //         if (dataSW2[k][0] < smartmetDate) {
-                        //             // Remove seasonal forecast before smartobsDate
-                        //             dataSW2[k][i+1] = null;
-                        //         } else if (dataSW[k][SWensemblelist[i]] == 0 || dataSWscaled[k][SWensemblelist[i]] < 0) {
-                        //             // Set SW to 0 if non-scaled SW is 0 or scaled < 0
-                        //             dataSW2[k][i+1] = 0;
-                        //         } else {
-                        //             dataSW2[k][i+1] = dataSWscaled[k][SWensemblelist[i]];
-                        //         }
-                        //     }
-                        //     dataSW2[k][perturbations + 2] = dataSW[k]["SWVL2-M3M3:SMARTMET:5015"];
-                        //     if (dataSW[k]["SWI2-0TO1:SWI:5059"] > 0) {
-                        //         dataSW2[k][perturbations + 3] = dataSW[k]["SWI2-0TO1:SWI:5059"]/100;
-                        //     }
-                        // }
-
-                        // Plot soil wetness time series
-                        var dataSW2 = [];
-                        for (k = 0; k < dataSW.length; k++) {
-                            dataSW2[k] = [];
-                            // Date format that works also in mobile safari
-                            dataSW2[k][0] = new Date(dataSW[k]["utctime"].replace(/-/g, "/"));
-                            for (i = 0; i <= perturbations; i = i + 1) {
-                                dataSW2[k][i + 1] = dataSW[k][SWensemblelist[i]];
-                            }
-                            dataSW2[k][perturbations + 2] = dataSW[k]["SWVL2-M3M3:SMARTMET:5015"];
-                            dataSW2[k][perturbations + 3] = dataSW[k]["SWI2-0TO1:EDTE:5068"];
-                            dataSW2[k][perturbations + 4] = dataSW[k]["SWI2-0TO1:SWI:5059"];
-                        }
-
-                        gsw = new Dygraph(
-                            document.getElementById("graphsw"),
-                            dataSW2,
-                            dyGraphSWOptions
-                        );
-                        document.getElementById("graphsw").style = "line-height: 1;";
-                        if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                            var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                selection: false,
-                                zoom: true,
-                                range: false
-                            });
-                            //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
-                            gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                        }
-
-                        // Fetch and plot soil temperature time series
-                        graphLoad4 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,K2C{TSOIL-K:ECBSF:::7:1:0}" + TGKensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-                            function (data) {
-                                if (data.length > 0) {
-                                    gst = new Dygraph(
-                                        document.getElementById("graphst"),
-                                        data,
-                                        dyGraphSTOptions
-                                    );
-                                    if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                                        var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                            selection: false,
-                                            zoom: true,
-                                            range: false
-                                        });
-                                        //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
-                                        gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                                    }
-                                } else {
-                                    document.getElementById("graphst").innerHTML = "Error loading data";
-                                    document.getElementById("graphst").style = "line-height: 240px;";
-                                }
-                            });
-
-
-                        // Plot scaled snow depth time series
-                        var dataSH2 = [];
-                        for (k = 0; k < dataSHscaled.length; k++) {
-                            dataSH2[k] = [];
-                            // Date format that works also in mobile safari
-                            dataSH2[k][0] = new Date(dataSHscaled[k]["utctime"].replace(/-/g, "/"));
-                            for (i = 0; i <= perturbations; i = i + 1) {
-                                // Remove seasonal forecast before startDate_smartobs-1day
-                                if (dataSH2[k][0] < smartobsDate) {
-                                    // Remove seasonal forecast before smartobsDate
-                                    dataSH2[k][i+1] = null;
-                                } else if (dataSH[k][SHensemblelist[i]] == 0 || dataSHscaled[k][SHensemblelist[i]] < 0) {
-                                    // Set SD to 0 if non-scaled SD is 0 or scaled < 0
-                                    dataSH2[k][i+1] = 0;
-                                } else {
-                                    dataSH2[k][i+1] = dataSHscaled[k][SHensemblelist[i]];
-                                }
-                            }
-                            if (dataSHscaled[k]["HSNOW-M:SMARTOBS:13:4"] !== null) {
-                                dataSH2[k][perturbations + 2] = dataSHscaled[k]["HSNOW-M:SMARTOBS:13:4"];
-                            } else {
-                                dataSH2[k][perturbations + 2] = dataSHscaled[k]["HSNOW-M:SMARTMET:5027"];
-                            }
-                        }
-
-                        gsh = new Dygraph(
-                            document.getElementById("graphsh"),
-                            dataSH2,
-                            dyGraphSHOptions
-                        );
-                        if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                            var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                selection: false,
-                                zoom: true,
-                                range: false
-                            });
-                            gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                        }
-                    });
-            });
-        }
-    });
-}
-
-function drawOutsideFinland() {
-    // // Outside Finland, no SMARTOBS or scaling
-    graphLoad = $.getJSON("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=" + param1 + "," + param2 + "," + param3 + "," + param4 + "," + param5 + "," + param7 + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
+    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + "," + param_cems + "," + param_duff + "," + param_firebuildup + "," + param_fireweather + "," + param_fuelmoisture + "," + param_firespread + "," + param_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
         function (data) {
-            var graphdata = [];
-            for (i = 0, k = 0; i < data.length; i++) {
-                var summer1, summer2, winter1, winter2;
 
-                // Seasonal summer index
-                if (data[i][param2] !== null) { summer1 = data[i][param2]; }
-                else { summer1 = 'nan'; }
+            // console.debug(data[param_time]);
 
-                // Seasonal winter index
-                if (data[i][param3] !== null || data[i][param4] !== null) { winter1 = Math.max(data[i][param3], data[i][param4]); }
-                else { winter1 = 'nan'; }
+            // var graphdata_time = [];
+            var graphdata_cems = [];
+            var graphdata_duff = [];
+            var graphdata_firebuildup = [];
+            var graphdata_fireweather = [];
+            var graphdata_fuelmoisture = [];
+            var graphdata_firespread = [];
+            var graphdata_fireseverity = [];
 
-                // 10 day forecast summer index                        
-                if (data[i][param5] !== null) { summer2 = data[i][param5]; }
-                else { summer2 = 'nan'; }
+            for (i = 0; i < data.length; i++) {
+                // graphdata_time[i]=data[i][param_time];
+                // graphdata_cems[i]=data[i][param_cems];
+                // graphdata_duff[i]=data[i][param_duff];
+                // graphdata_firebuildup[i]=data[i][param_firebuildup];
+                // graphdata_fireweather[i]=data[i][param_fireweather];
+                // graphdata_fuelmoisture[i]=data[i][param_fuelmoisture];
+                // graphdata_firespread[i]=data[i][param_firespread];
+                // graphdata_fireseverity[i]=data[i][param_fireseverity];
 
-                // // 10 day forecast winter index                        
-                // if (data[i][param6] !== null || data[i][param7] !== null) { winter2 = Math.max(data[i][param6], data[i][param7]); }
-                // if (data[i][param7] !== null) { winter2 = data[i][param7]; }
-                if (data[i][param7] !== null) { winter2 = Math.max(data[i][param3], data[i][param7]); }
-                else { winter2 = 'nan'; }
+                graphdata_cems[i]=[new Date(data[i][param_time]), data[i][param_cems]];
+                graphdata_duff[i]=[new Date(data[i][param_time]), data[i][param_duff]];
+                graphdata_firebuildup[i]=[new Date(data[i][param_time]), data[i][param_firebuildup]];
+                graphdata_fireweather[i]=[new Date(data[i][param_time]), data[i][param_fireweather]];
+                graphdata_fuelmoisture[i]=[new Date(data[i][param_time]), data[i][param_fuelmoisture]];
+                graphdata_firespread[i]=[new Date(data[i][param_time]), data[i][param_firespread]];
+                graphdata_fireseverity[i]=[new Date(data[i][param_time]), data[i][param_fireseverity]];
 
-                if (summer1 !== 'nan' || winter1 !== 'nan' || summer2 !== 'nan' || winter2 !== 'nan') {
-                    graphdata[k] = [new Date(data[i][param1]), summer1, winter1, summer2, winter2];
-                    k++;
-                }
             }
+
+            // console.debug([graphdata_time, graphdata_cems]);
+            // console.debug(graphdata_cems);
 
             if (!dateFixed && data.length > 0) {
                 // Fix the last date of dateslider to timeseries data
-                var maxDate = new Date(data[data.length - 1][param1]);
+                var maxDate = new Date(data[data.length - 1][param_time]);
                 var maxDays = Math.ceil((maxDate - startDate) / 1000 / 60 / 60 / 24);
                 if (dateslider.value > maxDays) {
                     dateslider.value = maxDays;
@@ -310,179 +61,120 @@ function drawOutsideFinland() {
                 dateFixed = true;
             }
 
-            if (graphdata.length > 0) {
-                gB = new Dygraph(
-                    document.getElementById("graphB"),
-                    graphdata,
-                    dyGraphBOptions
+            if (graphdata_cems.length > 0) {
+                g_cems = new Dygraph(
+                    document.getElementById("graph_cems"),
+                    // [graphdata_time, graphdata_cems],
+                    graphdata_cems,
+                    dyGraphOptions_cems
                 );
-                document.getElementById("graphB").style = "line-height: 1;";
+                document.getElementById("graph_cems").style = "line-height: 1;";
             } else {
-                document.getElementById("graphB").innerHTML = "Error loading data";
+                document.getElementById("graph_cems").innerHTML = "Error loading data";
             }
 
-            // graphLoad3 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,SOILWET1-M:ECBSF::9:7:1:0" + SWensemble + ",SWVL2-M3M3:SMARTMET:5015&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-            // graphLoad3 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,SOILWET-M3M3:ECBSF:::7:1:0" + SWensemble + ",SWVL2-M3M3:SMARTMET:5015&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-            graphLoad3 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime" + SWensemble + ",SWVL2-M3M3:SMARTMET:5015,SWI2-0TO1:EDTE:5068,SWI2-0TO1:SWI:5059&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-                function (data) {
-                    if (data.length > 0) {
-                        gsw = new Dygraph(
-                            document.getElementById("graphsw"),
-                            data,
-                            dyGraphSWOptions
-                        );
-                        document.getElementById("graphsw").style = "line-height: 1;";
-                        if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                            var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                selection: false,
-                                zoom: true,
-                                range: false
-                            });
-                            //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
-                            gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                        }
-                    } else {
-                        document.getElementById("graphsw").innerHTML = "Error loading data";
-                    }
-                })
+            if (graphdata_duff.length > 0) {
+                g_duff = new Dygraph(
+                    document.getElementById("graph_duff"),
+                    // [graphdata_time, graphdata_duff],
+                    graphdata_duff,
+                    dyGraphOptions_duff
+                );
+                document.getElementById("graph_duff").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_duff").innerHTML = "Error loading data";
+            }
 
-            // graphLoad4 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,K2C{TSOIL-K:ECBSF::9:7:1:0}" + TGKensemble + ",TG-K:SMARTMET&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-            // graphLoad4 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,K2C{TSOIL-K:ECBSF::9:7:1:0}" + TGKensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-            graphLoad4 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime,K2C{TSOIL-K:ECBSF:::7:1:0}" + TGKensemble + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-                function (data) {
-                    if (data.length > 0) {
-                        gst = new Dygraph(
-                            document.getElementById("graphst"),
-                            data,
-                            dyGraphSTOptions
-                        );
-                        if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                            var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                selection: false,
-                                zoom: true,
-                                range: false
-                            });
-                            //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
-                            gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                        }
-                    } else {
-                        document.getElementById("graphst").innerHTML = "Error loading data";
-                        document.getElementById("graphst").style = "line-height: 240px;";
-                    }
-                });
+            if (graphdata_firebuildup.length > 0) {
+                g_firebuildup = new Dygraph(
+                    document.getElementById("graph_firebuildup"),
+                    // [graphdata_time, graphdata_firebuildup],
+                    graphdata_firebuildup,
+                    dyGraphOptions_firebuildup
+                );
+                document.getElementById("graph_firebuildup").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_firebuildup").innerHTML = "Error loading data";
+            }
 
-            graphLoad2 = $.get("https://desm.harvesterseasons.com/timeseries?latlon=" + latlonPoint + "&param=utctime," + SHensemble + ",HSNOW-M:SMARTMET:5027&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&timeformat=sql&precision=full&separator=,&source=grid&tz=utc",
-                function (data) {
-                    if (data.length > 0) {
-                        gsh = new Dygraph(
-                            document.getElementById("graphsh"),
-                            data,
-                            dyGraphSHOptions
-                        );
-                        if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                            var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                                selection: false,
-                                zoom: true,
-                                range: false
-                            });
-                            //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})                    
-                        }
-                    } else {
-                        document.getElementById("graphsh").innerHTML = "Error loading data";
-                        document.getElementById("graphsh").style = "line-height: 240px;";
-                    }
-                });
+            if (graphdata_fireweather.length > 0) {
+                g_fireweather = new Dygraph(
+                    document.getElementById("graph_fireweather"),
+                    // [graphdata_time, graphdata_fireweather],
+                    graphdata_fireweather,
+                    dyGraphOptions_fireweather
+                );
+                document.getElementById("graph_fireweather").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_fireweather").innerHTML = "Error loading data";
+            }
+
+            if (graphdata_fuelmoisture.length > 0) {
+                g_fuelmoisture = new Dygraph(
+                    document.getElementById("graph_fuelmoisture"),
+                    // [graphdata_time, graphdata_fuelmoisture],
+                    graphdata_fuelmoisture,
+                    dyGraphOptions_fuelmoisture
+                );
+                document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_fuelmoisture").innerHTML = "Error loading data";
+            }
+
+            if (graphdata_firespread.length > 0) {
+                g_firespread = new Dygraph(
+                    document.getElementById("graph_firespread"),
+                    // [graphdata_time, graphdata_firespread],
+                    graphdata_firespread,
+                    dyGraphOptions_firespread
+                );
+                document.getElementById("graph_firespread").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_firespread").innerHTML = "Error loading data";
+            }
+
+            if (graphdata_fireseverity.length > 0) {
+                g_fireseverity = new Dygraph(
+                    document.getElementById("graph_fireseverity"),
+                    // [graphdata_time, graphdata_fireseverity],
+                    graphdata_fireseverity,
+                    dyGraphOptions_fireseverity
+                );
+                document.getElementById("graph_fireseverity").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_fireseverity").innerHTML = "Error loading data";
+            }
+
+                // if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
+                //     var sync = Dygraph.synchronize(gsw, gst, gsh, {
+                //         selection: false,
+                //         zoom: true,
+                //         range: false
+                //     });
+                //     //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
+                //     gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
+                // }
+
+            var sync = Dygraph.synchronize(g_cems, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
+                // selection: false,
+                selection: true,
+                zoom: true,
+                range: false
+            });
+
+            // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
+            // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
+            // g_firebuildup.updateOptions({ dateWindow: g_firebuildup.xAxisExtremes() })
+            // g_fireweather.updateOptions({ dateWindow: g_fireweather.xAxisExtremes() })
+            // g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() })
+            // g_firespread.updateOptions({ dateWindow: g_firespread.xAxisExtremes() })
+            // g_fireseverity.updateOptions({ dateWindow: g_fireseverity.xAxisExtremes() })
+
+
+
         });
 }
 
-
-
-function scalingFunction(data, ensemblelist, smartIdx, perturbations, smartvariable1, smartvariable2) {
-
-    // Scale seasonal forecast using observations
-    let datascaled = [];
-    for (let i = 0; i < data.length; i++) {
-        datascaled[i] = [];
-        datascaled[i]["utctime"] = data[i]["utctime"];
-        datascaled[i][smartvariable1] = data[i][smartvariable1];
-        if (smartvariable2 !== undefined) {
-            datascaled[i][smartvariable2] = data[i][smartvariable2];
-        }
-        for (let j = 0; j <= perturbations; j++) {
-            if (data[i][ensemblelist[j]] !== null) {
-                datascaled[i][ensemblelist[j]] = data[i][ensemblelist[j]] - (data[smartIdx][ensemblelist[j]] - data[smartIdx][smartvariable1]);
-            } else {
-                datascaled[i][ensemblelist[j]] = null;
-            }
-        }
-    }
-    return datascaled;
-}
-
-// -- ###########################################################################################
-// -- FUNCTION for an index if ensemble members are to 90 % under a threshold or only 10 %?
-// --  The function returns 0 for only 10% are over, 1 for between 10 and 90 % and 2 for over 90%
-// -- ###########################################################################################
-
-function harvidx(threshold, datascaled, ensemblelist, perturbations, smartvariable) {
-    let resultseries = [];
-
-    for (k = 0; k < datascaled.length; k++) {
-        // No result when smartvariable !== null
-        if (datascaled[k][smartvariable] !== null
-            || datascaled[k][ensemblelist[0]] == null) {
-                resultseries[k] = 'nan';
-
-        } else {
-            let nans = agree = disagree = count = 0;
-            // let threshold = 0.4;
-            for (i = 0; i <= perturbations; i++) {
-                let value = datascaled[k][ensemblelist[i]];
-                if (isNaN(value)) { nans++ }
-                else if (value < threshold) { agree++; count++; }
-                else { disagree++; count++; }
-            }
-            if (count < nans) { resultseries[k] = 'nan'; }
-            else if (agree / count >= 0.9) { resultseries[k] = 2; }
-            else if (agree / count <= 0.1) { resultseries[k] = 0; }
-            else { resultseries[k] = 1; }
-        }
-    }
-    return resultseries;
-}
-
-// -- ################################################################################################
-// -- FUNCTION for an index if ensemble members are to a given percent over a threshold or 1-percent?
-// --  The function returns 0 for only (1-percent) are over, 1 for between boundaries and 2 for over
-// -- calling ENSOVER{threshold;percent;parameterlist} percent as value 0..1
-// -- #################################################################################################
-
-function ensover(threshold, percent, datascaled, ensemblelist, perturbations, smartvariable) {
-    let resultseries = [];
-
-    for (k = 0; k < datascaled.length; k++) {
-        // No result when smartvariable !== null
-        if (datascaled[k][smartvariable] !== null
-            || datascaled[k][ensemblelist[0]] == null) {
-                resultseries[k] = 'nan';
-
-        } else {
-            let nans = agree = disagree = count = 0;
-            // let threshold = 0.4;
-            for (i = 0; i <= perturbations; i++) {
-                let value = datascaled[k][ensemblelist[i]];
-                if (isNaN(value)) { nans++ }
-                else if (value >= threshold) { agree++; count++; }
-                else { disagree++; count++; }
-            }
-            if (count < nans) { resultseries[k] = 'nan'; }
-            else if (agree / count >= percent) { resultseries[k] = 2; }
-            else if (agree / count <= (1 - percent)) { resultseries[k] = 0; }
-            else { resultseries[k] = 1; }
-        }
-    }
-    return resultseries;
-}
 
 function inFinland(lat, lon) {
 
