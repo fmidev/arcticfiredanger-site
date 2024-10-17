@@ -1548,9 +1548,9 @@ var center = L.circle(null, {
 var endDate = new Date();
 
 if (endDate.getUTCDate() < 15) {
-    endDate.setMonth(endDate.getUTCMonth() + 6);
+    endDate.setMonth(endDate.getUTCMonth() + 5);
 } else {
-    endDate.setMonth(endDate.getUTCMonth() + 7);
+    endDate.setMonth(endDate.getUTCMonth() + 5);
 }
 
 var endMonth = endDate.getUTCMonth() + 1;
