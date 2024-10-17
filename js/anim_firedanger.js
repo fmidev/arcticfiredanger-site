@@ -1278,7 +1278,7 @@ var dyGraphOptions_cems = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1293,7 +1293,7 @@ var dyGraphOptions_duff = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1308,7 +1308,7 @@ var dyGraphOptions_firebuildup = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1323,7 +1323,7 @@ var dyGraphOptions_fireweather = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1338,7 +1338,7 @@ var dyGraphOptions_fuelmoisture = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1353,7 +1353,7 @@ var dyGraphOptions_firespread = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
@@ -1368,7 +1368,7 @@ var dyGraphOptions_fireseverity = {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
     underlayCallback: timeseriedateline,
-    //clickCallback: timeserieclick,
+    clickCallback: timeserieclick,
     animatedZooms: true,
 }
 
