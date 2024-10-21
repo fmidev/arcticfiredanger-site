@@ -970,7 +970,9 @@ var fireseverityLegend = L.control({
     position: 'bottomright'
 });
 
-
+var ndmiLegend = L.control({
+    position: 'bottomright'
+});
 
 // var ndviLegend = L.control({
 //     position: 'bottomright'
@@ -1073,6 +1075,44 @@ fireseverityLegend.onAdd = function (map) {
     return div;
 };
 
+ndmiLegend.onAdd = function (map) {
+    // var src = legendURL + 'REQUEST=GetLegendGraphic&VERSION=1.3.0&LAYER=gui:isobands:CEMS_FDSRTE&sld_version=1.1.0&style=&format=image/png';
+    var div = L.DomUtil.create('div', 'info legend');
+    div.style.width = '40px';
+    div.style.height = '280px';
+    // div.style['background-image'] = 'url(' + src + ')';
+    // div.style['background-size'] = 'contain';
+    div.style['background'] = 'linear-gradient(to top, rgb(128, 0, 0) 0%, rgb(255, 0, 0) 35%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 65%, rgb(0, 0, 128) 100%)';
+    // var content = document.createTextNode("80%");
+    // div.appendChild(content);    
+
+    var span = document.createElement('span');
+    span.style = 'color: white; margin-left: -1px; margin-top: -5px';
+    // span.style = 'vertical-align: top; color: white; margin-left: -1px';
+    // span.style = 'vertical-align: top; color: white;';
+    span.appendChild(document.createTextNode("0.8"));
+    div.appendChild(span);
+
+    var span = document.createElement('span');
+    span.style = 'margin-left: -1px; margin-top: 105px';
+    // span.style = 'vertical-align: middle; color: white; margin-left: -1px';
+    // span.style = 'vertical-align: top; color: white;';
+    span.appendChild(document.createTextNode("0"));
+    div.appendChild(span);
+
+    var span = document.createElement('span');
+    span.style = 'color: white; margin-left: -1px; margin-top: 105px';
+    // span.style = 'vertical-align: bottom; color: white; margin-left: -1px';
+    // span.style = 'vertical-align: top; color: white;';
+    span.appendChild(document.createTextNode("-0.8"));
+    div.appendChild(span);
+
+    div.style['background-size'] = 'cover';
+    div.style['background-repeat'] = 'no-repeat';
+    return div;
+};
+
+
 // ndviLegend.onAdd = function (map) {
 //     var src = 'https://desm.harvesterseasons.com/wms?service=WMS&request=GetLegendGraphic&version=1.3.0&sld_version=1.1.0&style=default&format=image%2Fpng&layer=harvester%3As3sy%3ANDVI&width=85&height=185';
 //     var div = L.DomUtil.create('div', 'info legend');
@@ -1099,6 +1139,8 @@ var overlayMaps = {
     "NDMI": ndmiLayer.addTo(map),
 };
 
+ndmiLegend.addTo(map);
+
 // if (screen.width < 425) {
 //     var lcontrol = L.control.layers(baseMaps, overlayMaps).addTo(map);
 // } else {
@@ -1108,7 +1150,6 @@ var overlayMaps = {
 // var lcontrol = L.control.layers(baseMaps, overlayMaps).addTo(map);
 // var lcontrol = L.control.layers(baseMaps,'',{ collapsed: false } ).addTo(map);
 var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map);
-
 
 map.on('baselayerchange', function (e) {
     switch (e.name) {
@@ -1123,6 +1164,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             cemsLegend.addTo(this);
 
@@ -1139,6 +1181,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             duffLegend.addTo(this);
 
@@ -1155,6 +1198,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             firebuildupLegend.addTo(this);
             break;
@@ -1170,6 +1214,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             fireweatherLegend.addTo(this);
 
@@ -1186,6 +1231,7 @@ map.on('baselayerchange', function (e) {
             // map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             fuelmoistureLegend.addTo(this);
 
@@ -1202,6 +1248,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             // map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             firespreadLegend.addTo(this);
 
@@ -1218,6 +1265,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             // map.removeControl(fireseverityLegend);
+            map.removeControl(ndmiLegend);
 
             fireseverityLegend.addTo(this);
 
@@ -1233,8 +1281,12 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fuelmoistureLegend);
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
+            // map.removeControl(ndmiLegend);
+
+            ndmiLegend.addTo(this);
 
             plotgeotiff();
+            
             break;
         }
     }
