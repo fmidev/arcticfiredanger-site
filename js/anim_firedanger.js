@@ -747,43 +747,62 @@ var colorMap1 = [];
 //     colorMap1[i] = [0, i, i];
 // }
 
-// -1.0 = rgb(0, 0, 0) = NoData
+// 0 = NoData
 colorMap1[0] = [0, 0, 0];
 
+// // -1.0 = rgb(0, 0, 0)
+// // -0.8 = rgb(128, 0, 0)
+// for (i = 1; i <= 21; i++) {
+//     colorMap1[i] = [128*(i-1)/20, 0, 0];
+// }
+
+// -1.0 = rgb(128, 0, 0)
 // -0.8 = rgb(128, 0, 0)
 for (i = 1; i <= 21; i++) {
-    colorMap1[i] = [128*(i-1)/20, 0, 0];
+    colorMap1[i] = [128, 0, 0];
 }
 
+// -0.8 = rgb(128, 0, 0)
 // -0.24 = rgb(255, 0, 0)
 for (i = 22; i <= 77; i++) {
     colorMap1[i] = [128+127*(i-21)/56, 0, 0];
 }
 
+// -0.24 = rgb(255, 0, 0)
 // -0.032 = rgb(255, 255, 0)
 for (i = 78; i <= 98; i++) {
     colorMap1[i] = [255, 255*(i-77)/21, 0];
 }
 
+// -0.032 = rgb(255, 255, 0)
 // 0.032 = rgb(0, 255, 255)
 for (i = 99; i <= 104; i++) {
     colorMap1[i] = [255-255*(i-98)/6, 255, 255*(i-98)/6];
 }
 
+// 0.032 = rgb(0, 255, 255)
 // 0.24 = rgb(0, 0, 255)
 for (i = 104; i <= 125; i++) {
     colorMap1[i] = [0, 255-255*(i-103)/22, 255];
 }
 
+// 0.24 = rgb(0, 0, 255)
 // 0.8 = rgb(0, 0, 128)
 for (i = 126; i <= 181; i++) {
     colorMap1[i] = [0, 0, 255-127*(i-125)/56];
 }
 
-// 1.0 = rgb(0, 0, 0)
+// 0.8 = rgb(0, 0, 128)
+// 1.0 = rgb(0, 0, 128)
 for (i = 182; i <= 201; i++) {
-    colorMap1[i] = [0, 0, 128-128*(i-181)/20];
+    colorMap1[i] = [0, 0, 128];
 }
+
+// // 0.8 = rgb(0, 0, 128)
+// // 1.0 = rgb(0, 0, 0)
+// for (i = 182; i <= 201; i++) {
+//     colorMap1[i] = [0, 0, 128-128*(i-181)/20];
+// }
 
 
 // var idxSummer, idxWinter, idx2;
@@ -1082,29 +1101,39 @@ ndmiLegend.onAdd = function (map) {
     div.style.height = '280px';
     // div.style['background-image'] = 'url(' + src + ')';
     // div.style['background-size'] = 'contain';
-    div.style['background'] = 'linear-gradient(to top, rgb(128, 0, 0) 0%, rgb(255, 0, 0) 35%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 65%, rgb(0, 0, 128) 100%)';
+    // div.style['background'] = 'linear-gradient(to top, rgb(128, 0, 0) 0%, rgb(255, 0, 0) 35%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 65%, rgb(0, 0, 128) 100%)';
     // var content = document.createTextNode("80%");
-    // div.appendChild(content);    
+    // div.appendChild(content);   
+    
+    div.style['background'] = 'linear-gradient(to top, rgb(128, 0, 0) 0%, rgb(128, 0, 0) 10%, rgb(255, 0, 0) 38%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 62%, rgb(0, 0, 128) 90%, rgb(0, 0, 128) 100%)';
 
     var span = document.createElement('span');
-    span.style = 'color: white; margin-left: -1px; margin-top: -5px';
+    span.style = 'color: white; margin-top: -5px';
+    // span.style = 'color: white; margin-left: -1px; margin-top: -5px';
     // span.style = 'vertical-align: top; color: white; margin-left: -1px';
     // span.style = 'vertical-align: top; color: white;';
-    span.appendChild(document.createTextNode("0.8"));
+    // span.appendChild(document.createTextNode("0.8"));
+    span.appendChild(document.createTextNode("1.0"));
     div.appendChild(span);
 
     var span = document.createElement('span');
-    span.style = 'margin-left: -1px; margin-top: 105px';
-    // span.style = 'vertical-align: middle; color: white; margin-left: -1px';
-    // span.style = 'vertical-align: top; color: white;';
+    span.style = 'color: white; margin-top: 47px';
+    span.appendChild(document.createTextNode("0.5"));
+    div.appendChild(span);
+
+    var span = document.createElement('span');
+    span.style = 'margin-top: 47px';
     span.appendChild(document.createTextNode("0"));
     div.appendChild(span);
 
     var span = document.createElement('span');
-    span.style = 'color: white; margin-left: -1px; margin-top: 105px';
-    // span.style = 'vertical-align: bottom; color: white; margin-left: -1px';
-    // span.style = 'vertical-align: top; color: white;';
-    span.appendChild(document.createTextNode("-0.8"));
+    span.style = 'color: white; margin-top: 48px';
+    span.appendChild(document.createTextNode("-0.5"));
+    div.appendChild(span);
+
+    var span = document.createElement('span');
+    span.style = 'color: white; margin-top: 48px';
+    span.appendChild(document.createTextNode("-1.0"));
     div.appendChild(span);
 
     div.style['background-size'] = 'cover';

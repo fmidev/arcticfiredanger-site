@@ -136,19 +136,20 @@ header{
 .legend li { float: left; margin-right: 5px; }
 
 /* .legend span { border: 1px solid rgba(0, 0, 0, .8); float: left; width: 120px; height: 24px; margin: 2px; margin-top: 1px;} */
+
+/* NDMI legend values */
 .legend span {
     float: left; 
-    /* width: 120px;  */
     width: 100%; 
-    height: 24px; 
-    margin: 2px; 
-    margin-top: 1px;
     text-align: center;
-    margin-right: 1000px;
-
+    
+    /* height: 24px;  */
+    /* margin: 2px;  */
+    /* margin-top: 1px; */
+    /* margin-right: 1000px; */
 }
 
-.legend .ndmi { background: linear-gradient(to right, rgb(128, 0, 0) 0%, rgb(255, 0, 0) 35%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 65%, rgb(0, 0, 128) 100%) }
+/* .legend .ndmi { background: linear-gradient(to right, rgb(128, 0, 0) 0%, rgb(255, 0, 0) 35%, rgb(255, 255, 0) 48%, rgb(0, 255, 255) 52%, rgb(0, 0, 255) 65%, rgb(0, 0, 128) 100%) } */
 
 #set-opacity {
     /* background-color: rgb(240, 240, 240); */
