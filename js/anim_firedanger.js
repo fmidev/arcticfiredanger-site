@@ -1122,7 +1122,7 @@ ndmiLegend.onAdd = function (map) {
     div.appendChild(span);
 
     var span = document.createElement('span');
-    span.style = 'margin-top: 47px';
+    span.style = 'margin-top: 48px';
     span.appendChild(document.createTextNode("0"));
     div.appendChild(span);
 
@@ -1132,7 +1132,7 @@ ndmiLegend.onAdd = function (map) {
     div.appendChild(span);
 
     var span = document.createElement('span');
-    span.style = 'color: white; margin-top: 48px';
+    span.style = 'color: white; margin-top: 47px';
     span.appendChild(document.createTextNode("-1.0"));
     div.appendChild(span);
 
