@@ -1386,11 +1386,48 @@ var latlonPoint;
     return;
 }; */
 
+// const param_time = "utctime";
+// const param_cems = "DRTCODE:CEMS:5071:2:0:0";
+// const param_duff = "DUFMCODE:CEMS:5071:2:0:0";
+// const param_firebuildup = "FBUPINX:CEMS:5071:2:0:0";
+// const param_fireweather = "FWINX:CEMS:5071:2:0:0";
+// const param_fuelmoisture = "FFMCODE:CEMS:5071:2:0:0";
+// const param_firespread = "INFSINX:CEMS:5071:2:0:0";
+// const param_fireseverity = "FDSRTE:CEMS:5071:2:0:0";
+
+const param_time = "utctime";
+const param_cems = "DRTCODE:CEMS:5071:2:";
+const param_duff = "DUFMCODE:CEMS:5071:2:";
+const param_firebuildup = "FBUPINX:CEMS:5071:2:";
+const param_fireweather = "FWINX:CEMS:5071:2:";
+const param_fuelmoisture = "FFMCODE:CEMS:5071:2:";
+const param_firespread = "INFSINX:CEMS:5071:2:";
+const param_fireseverity = "FDSRTE:CEMS:5071:2:";
+
+
+const perturbations = 50;
+
+var ensemblelist_cems = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_cems[i] = param_cems + i + ":0";
+}
+
+var ensemble_cems = "";
+var label = ["date"];
+var labelstxt = {'DROUGHT-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'DROUGHT-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_cems += "," + param_cems + i + ":0";
+}
+
 var dyGraphOptions_cems = {
     legend: "always",
     ylabel: "CEMS Drought Code",
-    labels: ["date", "CEMS Drought Code"],
-    series: {'CEMS Drought Code': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "CEMS Drought Code"],
+    // series: {'CEMS Drought Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_cems",
     // axes: {
@@ -1401,11 +1438,27 @@ var dyGraphOptions_cems = {
     animatedZooms: true,
 }
 
+var ensemblelist_duff = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_duff[i] = param_duff + i + ":0";
+}
+
+var ensemble_duff = "";
+var label = ["date"];
+var labelstxt = {'MOISTURE-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'MOISTURE-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_duff += "," + param_duff + i + ":0";
+}
+
 var dyGraphOptions_duff = {
     legend: "always",
     ylabel: "Duff Moisture Code",
-    labels: ["date", "Duff Moisture Code"],
-    series: {'Duff Moisture Code': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Duff Moisture Code"],
+    // series: {'Duff Moisture Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_duff",
     // axes: {
@@ -1416,11 +1469,27 @@ var dyGraphOptions_duff = {
     animatedZooms: true,
 }
 
+var ensemblelist_firebuildup = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_firebuildup[i] = param_firebuildup + i + ":0";
+}
+
+var ensemble_firebuildup = "";
+var label = ["date"];
+var labelstxt = {'FBUILDUP-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'FBUILDUP-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_firebuildup += "," + param_firebuildup + i + ":0";
+}
+
 var dyGraphOptions_firebuildup = {
     legend: "always",
     ylabel: "Fire Build-Up Index",
-    labels: ["date", "Fire Build-Up Index"],
-    series: {'Fire Build-Up Index': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Fire Build-Up Index"],
+    // series: {'Fire Build-Up Index': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_firebuildup",
     // axes: {
@@ -1431,11 +1500,27 @@ var dyGraphOptions_firebuildup = {
     animatedZooms: true,
 }
 
+var ensemblelist_fireweather = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_fireweather[i] = param_fireweather + i + ":0";
+}
+
+var ensemble_fireweather = "";
+var label = ["date"];
+var labelstxt = {'FWEATHER-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'FWEATHER-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_fireweather += "," + param_fireweather + i + ":0";
+}
+
 var dyGraphOptions_fireweather = {
     legend: "always",
     ylabel: "Fire Weather Index",
-    labels: ["date", "Fire Weather Index"],
-    series: {'Fire Weather Index': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Fire Weather Index"],
+    // series: {'Fire Weather Index': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_fireweather",
     // axes: {
@@ -1446,11 +1531,27 @@ var dyGraphOptions_fireweather = {
     animatedZooms: true,
 }
 
+var ensemblelist_fuelmoisture = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_fuelmoisture[i] = param_fuelmoisture + i + ":0";
+}
+
+var ensemble_fuelmoisture = "";
+var label = ["date"];
+var labelstxt = {'FUELMOIST-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'FUELMOIST-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_fuelmoisture += "," + param_fuelmoisture + i + ":0";
+}
+
 var dyGraphOptions_fuelmoisture = {
     legend: "always",
     ylabel: "Fine Fuel Moisture Code",
-    labels: ["date", "Fine Fuel Moisture Code"],
-    series: {'Fine Fuel Moisture Code': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Fine Fuel Moisture Code"],
+    // series: {'Fine Fuel Moisture Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_fuelmoisture",
     // axes: {
@@ -1461,12 +1562,28 @@ var dyGraphOptions_fuelmoisture = {
     animatedZooms: true,
 }
 
+var ensemblelist_firespread = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_firespread[i] = param_firespread + i + ":0";
+}
+
+var ensemble_firespread = "";
+var label = ["date"];
+var labelstxt = {'FSPREAD-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'FSPREAD-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_firespread += "," + param_firespread + i + ":0";
+}
+
 var dyGraphOptions_firespread = {
     legend: "always",
     ylabel: "Initial Fire Spread Index",
-    labels: ["date", "Initial Fire Spread Index"],
-    series: {'Initial Fire Spread Index': { fillGraph: false, strokeWidth: 3 }},
-    // labelsDiv: "labels",
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Initial Fire Spread Index"],
+    // series: {'Initial Fire Spread Index': { fillGraph: false, strokeWidth: 3 }},
+    // // labelsDiv: "labels",
     labelsDiv: "labels_firespread",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
@@ -1476,11 +1593,27 @@ var dyGraphOptions_firespread = {
     animatedZooms: true,
 }
 
+var ensemblelist_fireseverity = [];
+for (i = 0; i <= perturbations; i++) {
+    ensemblelist_fireseverity[i] = param_fireseverity + i + ":0";
+}
+
+var ensemble_fireseverity = "";
+var label = ["date"];
+var labelstxt = {'FSEVERITY-0': { fillGraph: false }};
+for (i = 0; i <= perturbations; i++) {
+    label[i+1] = 'FSEVERITY-' + i ;
+    labelstxt[label[i+1]]= { fillGraph: false };
+    ensemble_fireseverity += "," + param_fireseverity + i + ":0";
+}
+
 var dyGraphOptions_fireseverity = {
     legend: "always",
     ylabel: "Fire Daily Severity Rating",
-    labels: ["date", "Fire Daily Severity Rating"],
-    series: {'Fire Daily Severity Rating': { fillGraph: false, strokeWidth: 3 }},
+    labels: label,
+    series: labelstxt,
+    // labels: ["date", "Fire Daily Severity Rating"],
+    // series: {'Fire Daily Severity Rating': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
     labelsDiv: "labels_fireseverity",
     // axes: {
@@ -1859,7 +1992,7 @@ function onLocationError(e) {
     //dyGraphBOptions.title = latlonTitle;
     titleB.innerHTML = latlonTitle;
 
-    perturbations = 50;
+    // perturbations = 50;
     //if (latlonPoint == "Kajaani") { latlonPoint = "64.22728,27.72846"; }
 
     // document.getElementById("graphB").innerHTML = "Loading...";
