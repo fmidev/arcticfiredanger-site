@@ -24,20 +24,13 @@ header{
     margin-bottom: 10px;
 }
 
-#labelsB {
-    /* position: absolute; */
-    /*margin-left: 25px;*/
-    /* margin-left: 82px; */
+/* #labelsB {
     font-size: 11px;
     z-index: auto;
-    /*width: 90%;*/
     height: 15px;
     margin-top: 3px;
-    /*line-height: 28px;*/
-    /* margin-top: -18px; */
-    /* text-align: left; */
     text-align: center;
-}
+} */
 
 #titleB {
     font-size: 22px;
@@ -59,18 +52,16 @@ header{
     text-align: center;
 }
 
-#labels {
+/* #labels {
     position:relative;
     font-size: 15px;
     width: 95%;
     height: 15px;
     text-align: left;
-    /*margin-left: 14px;
-    margin-left: 60px;*/
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-}
+} */
 
 #labels_cems, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {      
     position:relative;
@@ -203,15 +194,14 @@ header{
 @media only screen and (max-width: 740px){
     /*header { background-size: 47%; }
     #titleB { margin-top: 35px; }*/
-    #labelsB { 
+    /* #labelsB { 
         position: relative; 
         margin-right: auto; 
         margin-left: auto; 
         text-align: center;
-        /*padding-top: 5px;*/
         height: 15px;
         margin-top: 0;
-    }
+    } */
  }
 @media only screen and (max-width: 732px){
     #dynamic-control { width: 100%; }
@@ -256,7 +246,7 @@ header{
 @media only screen and (max-width: 378px){
     #harvestability-legend { margin-bottom: 110px; }
     /* #labels { height: 140px; } */
-    #labelsB { height: 30px; }
+    /* #labelsB { height: 30px; } */
 }
 @media only screen and (max-width: 365px){
     /* #labels { height: 150px; } */
