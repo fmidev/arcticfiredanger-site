@@ -172,6 +172,14 @@ function synctimeseries() {
     //         range: false
     //     });
     // };
+    change_cems();
+    change_duff();
+    change_firebuildup();
+    change_fireweather();
+    change_fuelmoisture();
+    change_firespread();
+    change_fireseverity();
+
 }
 
 // // Load all timeseries at once (slow)
