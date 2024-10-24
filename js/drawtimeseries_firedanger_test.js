@@ -35,7 +35,7 @@ function drawtimeseries() {
                     graphdata_cems,
                     dyGraphOptions_cems
                 );
-                document.getElementById("graph_cems").style = "line-height: 1;";
+                // document.getElementById("graph_cems").style = "line-height: 1;";
             } else {
                 document.getElementById("graph_cems").innerHTML = "Error loading data";
             }
@@ -50,11 +50,14 @@ function drawtimeseries() {
                             graphdata_duff,
                             dyGraphOptions_duff
                         );
-                        document.getElementById("graph_duff").style = "line-height: 1;";
+                        // document.getElementById("graph_duff").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_duff").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_duff();
+
                 });
 
             graphLoad3 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firebuildup + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -67,11 +70,14 @@ function drawtimeseries() {
                             graphdata_firebuildup,
                             dyGraphOptions_firebuildup
                         );
-                        document.getElementById("graph_firebuildup").style = "line-height: 1;";
+                        // document.getElementById("graph_firebuildup").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_firebuildup").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_firebuildup();
+ 
                 });
 
             graphLoad4 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -83,11 +89,14 @@ function drawtimeseries() {
                             graphdata_fireweather,
                             dyGraphOptions_fireweather
                         );
-                        document.getElementById("graph_fireweather").style = "line-height: 1;";
+                        // document.getElementById("graph_fireweather").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_fireweather").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_fireweather();
+ 
                 });
 
             graphLoad5 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fuelmoisture + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -99,11 +108,14 @@ function drawtimeseries() {
                             graphdata_fuelmoisture,
                             dyGraphOptions_fuelmoisture
                         );
-                        document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+                        // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_fuelmoisture").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_fuelmoisture();
+
                 });
 
             graphLoad6 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firespread + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -115,11 +127,14 @@ function drawtimeseries() {
                             graphdata_firespread,
                             dyGraphOptions_firespread
                         );
-                        document.getElementById("graph_firespread").style = "line-height: 1;";
+                        // document.getElementById("graph_firespread").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_firespread").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_firespread();
+
                 });
 
             graphLoad7 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -131,11 +146,14 @@ function drawtimeseries() {
                             graphdata_fireseverity,
                             dyGraphOptions_fireseverity
                         );
-                        document.getElementById("graph_fireseverity").style = "line-height: 1;";
+                        // document.getElementById("graph_fireseverity").style = "line-height: 1;";
                     } else {
                         document.getElementById("graph_fireseverity").innerHTML = "Error loading data";
                     }
                     synctimeseries();
+
+                    change_fireseverity();
+
                 });
 
                 // if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
@@ -149,6 +167,8 @@ function drawtimeseries() {
                 // }
 
             synctimeseries();
+
+            change_cems();
 
             // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
             // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
@@ -172,13 +192,14 @@ function synctimeseries() {
     //         range: false
     //     });
     // };
-    change_cems();
-    change_duff();
-    change_firebuildup();
-    change_fireweather();
-    change_fuelmoisture();
-    change_firespread();
-    change_fireseverity();
+
+    // change_cems();
+    // change_duff();
+    // change_firebuildup();
+    // change_fireweather();
+    // change_fuelmoisture();
+    // change_firespread();
+    // change_fireseverity();
 
 }
 

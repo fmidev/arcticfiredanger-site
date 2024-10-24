@@ -1867,20 +1867,28 @@ function onMapClick(e) {
 
     document.getElementById("graph_cems").innerHTML = "Loading...";
     document.getElementById("graph_cems").style = "line-height: 240px;";
-    document.getElementById("graph_duff").innerHTML = "";
-    document.getElementById("graph_duff").style = "line-height: 1;";
-    document.getElementById("graph_firebuildup").innerHTML = "";
-    document.getElementById("graph_firebuildup").style = "line-height: 1;";
-    document.getElementById("graph_fireweather").innerHTML = "";
-    document.getElementById("graph_fireweather").style = "line-height: 1;";
-    document.getElementById("graph_fuelmoisture").innerHTML = "";
-    document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-    document.getElementById("graph_firespread").innerHTML = "";
-    document.getElementById("graph_firespread").style = "line-height: 1;";
-    document.getElementById("graph_fireseverity").innerHTML = "";
-    document.getElementById("graph_fireseverity").style = "line-height: 1;";
+    // document.getElementById("graph_duff").innerHTML = "";
+    // document.getElementById("graph_duff").style = "line-height: 1;";
+    // document.getElementById("graph_firebuildup").innerHTML = "";
+    // document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    // document.getElementById("graph_fireweather").innerHTML = "";
+    // document.getElementById("graph_fireweather").style = "line-height: 1;";
+    // document.getElementById("graph_fuelmoisture").innerHTML = "";
+    // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    // document.getElementById("graph_firespread").innerHTML = "";
+    // document.getElementById("graph_firespread").style = "line-height: 1;";
+    // document.getElementById("graph_fireseverity").innerHTML = "";
+    // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
     graphTimer = setTimeout(function () {
+        document.getElementById("graph_cems").style.display = "block";
+        document.getElementById("graph_duff").style.display = "block";
+        document.getElementById("graph_firebuildup").style.display = "block";
+        document.getElementById("graph_fireweather").style.display = "block";
+        document.getElementById("graph_fuelmoisture").style.display = "block";
+        document.getElementById("graph_firespread").style.display = "block";
+        document.getElementById("graph_fireseverity").style.display = "block";        
+
         drawtimeseries();
     }, 2000);
 
@@ -1955,18 +1963,18 @@ function onLocationFound(e) {
 
     document.getElementById("graph_cems").innerHTML = "Loading...";
     document.getElementById("graph_cems").style = "line-height: 240px;";
-    document.getElementById("graph_duff").innerHTML = "";
-    document.getElementById("graph_duff").style = "line-height: 1;";
-    document.getElementById("graph_firebuildup").innerHTML = "";
-    document.getElementById("graph_firebuildup").style = "line-height: 1;";
-    document.getElementById("graph_fireweather").innerHTML = "";
-    document.getElementById("graph_fireweather").style = "line-height: 1;";
-    document.getElementById("graph_fuelmoisture").innerHTML = "";
-    document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-    document.getElementById("graph_firespread").innerHTML = "";
-    document.getElementById("graph_firespread").style = "line-height: 1;";
-    document.getElementById("graph_fireseverity").innerHTML = "";
-    document.getElementById("graph_fireseverity").style = "line-height: 1;";
+    // document.getElementById("graph_duff").innerHTML = "";
+    // document.getElementById("graph_duff").style = "line-height: 1;";
+    // document.getElementById("graph_firebuildup").innerHTML = "";
+    // document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    // document.getElementById("graph_fireweather").innerHTML = "";
+    // document.getElementById("graph_fireweather").style = "line-height: 1;";
+    // document.getElementById("graph_fuelmoisture").innerHTML = "";
+    // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    // document.getElementById("graph_firespread").innerHTML = "";
+    // document.getElementById("graph_firespread").style = "line-height: 1;";
+    // document.getElementById("graph_fireseverity").innerHTML = "";
+    // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
 
     drawtimeseries();
@@ -2006,18 +2014,18 @@ function onLocationError(e) {
 
     document.getElementById("graph_cems").innerHTML = "Loading...";
     document.getElementById("graph_cems").style = "line-height: 240px;";
-    document.getElementById("graph_duff").innerHTML = "";
-    document.getElementById("graph_duff").style = "line-height: 1;";
-    document.getElementById("graph_firebuildup").innerHTML = "";
-    document.getElementById("graph_firebuildup").style = "line-height: 1;";
-    document.getElementById("graph_fireweather").innerHTML = "";
-    document.getElementById("graph_fireweather").style = "line-height: 1;";
-    document.getElementById("graph_fuelmoisture").innerHTML = "";
-    document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-    document.getElementById("graph_firespread").innerHTML = "";
-    document.getElementById("graph_firespread").style = "line-height: 1;";
-    document.getElementById("graph_fireseverity").innerHTML = "";
-    document.getElementById("graph_fireseverity").style = "line-height: 1;";
+    // document.getElementById("graph_duff").innerHTML = "";
+    // document.getElementById("graph_duff").style = "line-height: 1;";
+    // document.getElementById("graph_firebuildup").innerHTML = "";
+    // document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    // document.getElementById("graph_fireweather").innerHTML = "";
+    // document.getElementById("graph_fireweather").style = "line-height: 1;";
+    // document.getElementById("graph_fuelmoisture").innerHTML = "";
+    // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    // document.getElementById("graph_firespread").innerHTML = "";
+    // document.getElementById("graph_firespread").style = "line-height: 1;";
+    // document.getElementById("graph_fireseverity").innerHTML = "";
+    // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
     drawtimeseries();
 
@@ -2060,18 +2068,18 @@ function onPermalink() {
 
     document.getElementById("graph_cems").innerHTML = "Loading...";
     document.getElementById("graph_cems").style = "line-height: 240px;";
-    document.getElementById("graph_duff").innerHTML = "";
-    document.getElementById("graph_duff").style = "line-height: 1;";
-    document.getElementById("graph_firebuildup").innerHTML = "";
-    document.getElementById("graph_firebuildup").style = "line-height: 1;";
-    document.getElementById("graph_fireweather").innerHTML = "";
-    document.getElementById("graph_fireweather").style = "line-height: 1;";
-    document.getElementById("graph_fuelmoisture").innerHTML = "";
-    document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-    document.getElementById("graph_firespread").innerHTML = "";
-    document.getElementById("graph_firespread").style = "line-height: 1;";
-    document.getElementById("graph_fireseverity").innerHTML = "";
-    document.getElementById("graph_fireseverity").style = "line-height: 1;";
+    // document.getElementById("graph_duff").innerHTML = "";
+    // document.getElementById("graph_duff").style = "line-height: 1;";
+    // document.getElementById("graph_firebuildup").innerHTML = "";
+    // document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    // document.getElementById("graph_fireweather").innerHTML = "";
+    // document.getElementById("graph_fireweather").style = "line-height: 1;";
+    // document.getElementById("graph_fuelmoisture").innerHTML = "";
+    // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    // document.getElementById("graph_firespread").innerHTML = "";
+    // document.getElementById("graph_firespread").style = "line-height: 1;";
+    // document.getElementById("graph_fireseverity").innerHTML = "";
+    // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
     drawtimeseries();
 
@@ -2192,6 +2200,7 @@ function change_fuelmoisture() {
     if (document.getElementById('checkbox_fuelmoisture').checked) {
         document.getElementById("labels_fuelmoisture").style.display = "block";
         document.getElementById("graph_fuelmoisture").style.display = "block";
+        if (typeof g_fuelmoisture !== 'undefined') { g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() }) }
     } else {
         document.getElementById("labels_fuelmoisture").style.display = "none";
         document.getElementById("graph_fuelmoisture").style.display = "none";
