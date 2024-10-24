@@ -2148,143 +2148,72 @@ function timeserieclick(e, x, points) {
 // }
 
 
-// function change_cems() {
-//     if (document.getElementById('checkbox_cems').checked) {
-//         document.getElementById("labels_cems").style.display = "block";
-//         document.getElementById("graph_cems").style.display = "block";
-//     } else {
-//         document.getElementById("labels_cems").style.display = "none";
-//         document.getElementById("graph_cems").style.display = "none";
-//     }
-// }
+function change_cems() {
+    if (document.getElementById('checkbox_cems').checked) {
+        document.getElementById("labels_cems").style.display = "block";
+        document.getElementById("graph_cems").style.display = "block";
+    } else {
+        document.getElementById("labels_cems").style.display = "none";
+        document.getElementById("graph_cems").style.display = "none";
+    }
+}
 
-// function change_duff() {
-//     if (document.getElementById('checkbox_duff').checked) {
-//         document.getElementById("labels_duff").style.display = "block";
-//         document.getElementById("graph_duff").style.display = "block";
-//     } else {
-//         document.getElementById("labels_duff").style.display = "none";
-//         document.getElementById("graph_duff").style.display = "none";
-//     }
-// }
+function change_duff() {
+    if (document.getElementById('checkbox_duff').checked) {
+        document.getElementById("labels_duff").style.display = "block";
+        document.getElementById("graph_duff").style.display = "block";
+    } else {
+        document.getElementById("labels_duff").style.display = "none";
+        document.getElementById("graph_duff").style.display = "none";
+    }
+}
 
-// function change_firebuildup() {
-//     if (document.getElementById('checkbox_firebuildup').checked) {
-//         document.getElementById("labels_firebuildup").style.display = "block";
-//         document.getElementById("graph_firebuildup").style.display = "block";
-//     } else {
-//         document.getElementById("labels_firebuildup").style.display = "none";
-//         document.getElementById("graph_firebuildup").style.display = "none";
-//     }
-// }
+function change_firebuildup() {
+    if (document.getElementById('checkbox_firebuildup').checked) {
+        document.getElementById("labels_firebuildup").style.display = "block";
+        document.getElementById("graph_firebuildup").style.display = "block";
+    } else {
+        document.getElementById("labels_firebuildup").style.display = "none";
+        document.getElementById("graph_firebuildup").style.display = "none";
+    }
+}
 
-// function change_fireweather() {
-//     if (document.getElementById('checkbox_fireweather').checked) {
-//         document.getElementById("labels_fireweather").style.display = "block";
-//         document.getElementById("graph_fireweather").style.display = "block";
-//     } else {
-//         document.getElementById("labels_fireweather").style.display = "none";
-//         document.getElementById("graph_fireweather").style.display = "none";
-//     }
-// }
+function change_fireweather() {
+    if (document.getElementById('checkbox_fireweather').checked) {
+        document.getElementById("labels_fireweather").style.display = "block";
+        document.getElementById("graph_fireweather").style.display = "block";
+    } else {
+        document.getElementById("labels_fireweather").style.display = "none";
+        document.getElementById("graph_fireweather").style.display = "none";
+    }
+}
 
-// function change_fuelmoisture() {
-//     if (document.getElementById('checkbox_fuelmoisture').checked) {
-//         document.getElementById("labels_fuelmoisture").style.display = "block";
-//         document.getElementById("graph_fuelmoisture").style.display = "block";
-//     } else {
-//         document.getElementById("labels_fuelmoisture").style.display = "none";
-//         document.getElementById("graph_fuelmoisture").style.display = "none";
-//     }
-// }
+function change_fuelmoisture() {
+    if (document.getElementById('checkbox_fuelmoisture').checked) {
+        document.getElementById("labels_fuelmoisture").style.display = "block";
+        document.getElementById("graph_fuelmoisture").style.display = "block";
+    } else {
+        document.getElementById("labels_fuelmoisture").style.display = "none";
+        document.getElementById("graph_fuelmoisture").style.display = "none";
+    }
+}
 
-// function change_firespread() {
-//     if (document.getElementById('checkbox_firespread').checked) {
-//         document.getElementById("labels_firespread").style.display = "block";
-//         document.getElementById("graph_firespread").style.display = "block";
-//     } else {
-//         document.getElementById("labels_firespread").style.display = "none";
-//         document.getElementById("graph_firespread").style.display = "none";
-//     }
-// }
+function change_firespread() {
+    if (document.getElementById('checkbox_firespread').checked) {
+        document.getElementById("labels_firespread").style.display = "block";
+        document.getElementById("graph_firespread").style.display = "block";
+    } else {
+        document.getElementById("labels_firespread").style.display = "none";
+        document.getElementById("graph_firespread").style.display = "none";
+    }
+}
 
-// function change_fireseverity() {
-//     if (document.getElementById('checkbox_fireseverity').checked) {
-//         document.getElementById("labels_fireseverity").style.display = "block";
-//         document.getElementById("graph_fireseverity").style.display = "block";
-//     } else {
-//         document.getElementById("labels_fireseverity").style.display = "none";
-//         document.getElementById("graph_fireseverity").style.display = "none";
-//     }
-// }
-
-// function change_cems() {
-//     if (document.getElementById('checkbox_cems').checked) {
-//         $(document.getElementById("labels_cems")).show();
-//         $(document.getElementById("graph_cems")).show();
-//     } else {
-//         $(document.getElementById("labels_cems")).hide();
-//         $(document.getElementById("graph_cems")).hide();
-//     }
-// }
-
-// function change_duff() {
-//     if (document.getElementById('checkbox_duff').checked) {
-//         $(document.getElementById("labels_duff")).show();
-//         $(document.getElementById("graph_duff")).show();
-//     } else {
-//         $(document.getElementById("labels_duff")).hide();
-//         $(document.getElementById("graph_duff")).hide();
-//     }
-// }
-
-// function change_firebuildup() {
-//     if (document.getElementById('checkbox_firebuildup').checked) {
-//         $(document.getElementById("labels_firebuildup")).show();
-//         $(document.getElementById("graph_firebuildup")).show();
-//     } else {
-//         $(document.getElementById("labels_firebuildup")).hide();
-//         $(document.getElementById("graph_firebuildup")).hide();
-//     }
-// }
-
-// function change_fireweather() {
-//     if (document.getElementById('checkbox_fireweather').checked) {
-//         $(document.getElementById("labels_fireweather")).show();
-//         $(document.getElementById("graph_fireweather")).show();
-//     } else {
-//         $(document.getElementById("labels_fireweather")).hide();
-//         $(document.getElementById("graph_fireweather")).hide();
-//     }
-// }
-
-// function change_fuelmoisture() {
-//     if (document.getElementById('checkbox_fuelmoisture').checked) {
-//         $(document.getElementById("labels_fuelmoisture")).show();
-//         $(document.getElementById("graph_fuelmoisture")).show();
-//     } else {
-//         $(document.getElementById("labels_fuelmoisture")).hide();
-//         $(document.getElementById("graph_fuelmoisture")).hide();
-//     }
-// }
-
-// function change_firespread() {
-//     if (document.getElementById('checkbox_firespread').checked) {
-//         $(document.getElementById("labels_firespread")).show();
-//         $(document.getElementById("graph_firespread")).show();
-//     } else {
-//         $(document.getElementById("labels_firespread")).hide();
-//         $(document.getElementById("graph_firespread")).hide();
-//     }
-// }
-
-// function change_fireseverity() {
-//     if (document.getElementById('checkbox_fireseverity').checked) {
-//         $(document.getElementById("labels_fireseverity")).show();
-//         $(document.getElementById("graph_fireseverity")).show();
-//     } else {
-//         $(document.getElementById("labels_fireseverity")).hide();
-//         $(document.getElementById("graph_fireseverity")).hide();
-//     }
-// }
-
+function change_fireseverity() {
+    if (document.getElementById('checkbox_fireseverity').checked) {
+        document.getElementById("labels_fireseverity").style.display = "block";
+        document.getElementById("graph_fireseverity").style.display = "block";
+    } else {
+        document.getElementById("labels_fireseverity").style.display = "none";
+        document.getElementById("graph_fireseverity").style.display = "none";
+    }
+}
