@@ -35,7 +35,7 @@ function drawtimeseries() {
                     graphdata_cems,
                     dyGraphOptions_cems
                 );
-                // document.getElementById("graph_cems").style = "line-height: 1;";
+                document.getElementById("graph_cems").style = "line-height: 1;";
             } else {
                 document.getElementById("graph_cems").innerHTML = "Error loading data";
             }
