@@ -1,16 +1,16 @@
-function drawtimeseries() {
+function drawtimeseries_fireweather() {
 
-    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
+    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
         function (data) {
-            var graphdata_cems = [];
+            var graphdata_fireweather = [];
 
             for (i = 0; i < data.length; i++) {
-                graphdata_cems[i] = [];
-                graphdata_cems[i][0] = new Date(data[i][param_time]);
+                graphdata_fireweather[i] = [];
+                graphdata_fireweather[i][0] = new Date(data[i][param_time]);
                 for (j = 0; j <= perturbations; j++) {
-                    graphdata_cems[i][j+1] = data[i][ensemblelist_cems[j]];
+                    graphdata_fireweather[i][j + 1] = data[i][ensemblelist_fireweather[j]];
                 }
-                
+
             }
 
             if (!dateFixed && data.length > 0) {
@@ -28,180 +28,216 @@ function drawtimeseries() {
                 dateFixed = true;
             }
 
-            if (graphdata_cems.length > 0) {
-                g_cems = new Dygraph(
-                    document.getElementById("graph_cems"),
-                    // [graphdata_time, graphdata_cems],
-                    graphdata_cems,
-                    dyGraphOptions_cems
+            if (graphdata_fireweather.length > 0) {
+                g_fireweather = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_fireweather,
+                    dyGraphOptions_fireweather
                 );
-                document.getElementById("graph_cems").style = "line-height: 1;";
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
             } else {
-                document.getElementById("graph_cems").innerHTML = "Error loading data";
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
             }
-
-            graphLoad2 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_duff + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_duff) {
-
-                    if (graphdata_duff.length > 0) {
-                        g_duff = new Dygraph(
-                            document.getElementById("graph_duff"),
-                            // [graphdata_time, graphdata_duff],
-                            graphdata_duff,
-                            dyGraphOptions_duff
-                        );
-                        // document.getElementById("graph_duff").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_duff").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_duff();
-
-                });
-
-            graphLoad3 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firebuildup + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_firebuildup) {
-
-                    if (graphdata_firebuildup.length > 0) {
-                        g_firebuildup = new Dygraph(
-                            document.getElementById("graph_firebuildup"),
-                            // [graphdata_time, graphdata_firebuildup],
-                            graphdata_firebuildup,
-                            dyGraphOptions_firebuildup
-                        );
-                        // document.getElementById("graph_firebuildup").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_firebuildup").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_firebuildup();
- 
-                });
-
-            graphLoad4 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_fireweather) {
-                    if (graphdata_fireweather.length > 0) {
-                        g_fireweather = new Dygraph(
-                            document.getElementById("graph_fireweather"),
-                            // [graphdata_time, graphdata_fireweather],
-                            graphdata_fireweather,
-                            dyGraphOptions_fireweather
-                        );
-                        // document.getElementById("graph_fireweather").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_fireweather").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_fireweather();
- 
-                });
-
-            graphLoad5 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fuelmoisture + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_fuelmoisture) {
-                    if (graphdata_fuelmoisture.length > 0) {
-                        g_fuelmoisture = new Dygraph(
-                            document.getElementById("graph_fuelmoisture"),
-                            // [graphdata_time, graphdata_fuelmoisture],
-                            graphdata_fuelmoisture,
-                            dyGraphOptions_fuelmoisture
-                        );
-                        // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_fuelmoisture").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_fuelmoisture();
-
-                });
-
-            graphLoad6 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firespread + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_firespread) {
-                    if (graphdata_firespread.length > 0) {
-                        g_firespread = new Dygraph(
-                            document.getElementById("graph_firespread"),
-                            // [graphdata_time, graphdata_firespread],
-                            graphdata_firespread,
-                            dyGraphOptions_firespread
-                        );
-                        // document.getElementById("graph_firespread").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_firespread").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_firespread();
-
-                });
-
-            graphLoad7 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
-                function (graphdata_fireseverity) {
-                    if (graphdata_fireseverity.length > 0) {
-                        g_fireseverity = new Dygraph(
-                            document.getElementById("graph_fireseverity"),
-                            // [graphdata_time, graphdata_fireseverity],
-                            graphdata_fireseverity,
-                            dyGraphOptions_fireseverity
-                        );
-                        // document.getElementById("graph_fireseverity").style = "line-height: 1;";
-                    } else {
-                        document.getElementById("graph_fireseverity").innerHTML = "Error loading data";
-                    }
-                    synctimeseries();
-
-                    change_fireseverity();
-
-                });
-
-                // if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
-                //     var sync = Dygraph.synchronize(gsw, gst, gsh, {
-                //         selection: false,
-                //         zoom: true,
-                //         range: false
-                //     });
-                //     //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
-                //     gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
-                // }
-
-            synctimeseries();
-
-            change_cems();
-
-            // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
-            // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
-            // g_firebuildup.updateOptions({ dateWindow: g_firebuildup.xAxisExtremes() })
-            // g_fireweather.updateOptions({ dateWindow: g_fireweather.xAxisExtremes() })
-            // g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() })
-            // g_firespread.updateOptions({ dateWindow: g_firespread.xAxisExtremes() })
-            // g_fireseverity.updateOptions({ dateWindow: g_fireseverity.xAxisExtremes() })
-
-
 
         });
 }
 
-function synctimeseries() {
-    // if (typeof g_cems !== 'undefined' && typeof g_duff !== 'undefined' && typeof g_firebuildup !== 'undefined' && typeof g_fireweather !== 'undefined' && typeof g_fuelmoisture !== 'undefined' && typeof g_firespread !== 'undefined' && typeof g_fireseverity !== 'undefined') {
-    //     var sync = Dygraph.synchronize(g_cems, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
-    //         // selection: false,
-    //         selection: true,
-    //         zoom: true,
-    //         range: false
-    //     });
-    // };
+function drawtimeseries_cems() {
 
-    // change_cems();
-    // change_duff();
-    // change_firebuildup();
-    // change_fireweather();
-    // change_fuelmoisture();
-    // change_firespread();
-    // change_fireseverity();
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_cems) {
+
+            if (graphdata_cems.length > 0) {
+                g_cems = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_cems,
+                    dyGraphOptions_cems
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_cems();
+
+        });
+}
+
+function drawtimeseries_duff() {
+
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_duff + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_duff) {
+
+            if (graphdata_duff.length > 0) {
+                g_duff = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_duff,
+                    dyGraphOptions_duff
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_duff();
+
+        });
+}
+
+function drawtimeseries_firebuildup() {
+
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firebuildup + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_firebuildup) {
+
+            if (graphdata_firebuildup.length > 0) {
+                g_firebuildup = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_firebuildup,
+                    dyGraphOptions_firebuildup
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_firebuildup(); 
+        });
+}
+
+// function drawtimeseries_fireweather() {
+
+//     graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+//         function (graphdata_fireweather) {
+//             if (graphdata_fireweather.length > 0) {
+//                 g_fireweather = new Dygraph(
+//                     document.getElementById("graph_timeseries"),
+//                     graphdata_fireweather,
+//                     dyGraphOptions_fireweather
+//                 );
+//                 document.getElementById("graph_timeseries").style = "line-height: 1;";
+//             } else {
+//                 document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+//             }
+
+//             // synctimeseries();
+//             // change_fireweather();
+
+//         });
+
+// }
+
+function drawtimeseries_fuelmoisture() {
+
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fuelmoisture + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_fuelmoisture) {
+            if (graphdata_fuelmoisture.length > 0) {
+                g_fuelmoisture = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_fuelmoisture,
+                    dyGraphOptions_fuelmoisture
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_fuelmoisture();
+
+        });
 
 }
+
+function drawtimeseries_firespread() {
+
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firespread + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_firespread) {
+            if (graphdata_firespread.length > 0) {
+                g_firespread = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_firespread,
+                    dyGraphOptions_firespread
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_firespread();
+
+        });
+
+}
+
+function drawtimeseries_fireseverity() {
+
+    graphLoad = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+        function (graphdata_fireseverity) {
+            if (graphdata_fireseverity.length > 0) {
+                g_fireseverity = new Dygraph(
+                    document.getElementById("graph_timeseries"),
+                    graphdata_fireseverity,
+                    dyGraphOptions_fireseverity
+                );
+                document.getElementById("graph_timeseries").style = "line-height: 1;";
+            } else {
+                document.getElementById("graph_timeseries").innerHTML = "Error loading data";
+            }
+
+            // synctimeseries();
+            // change_fireseverity();
+
+        });
+
+}
+
+// function drawtimeseries() {
+//                 // if (typeof gsw !== 'undefined' && typeof gst !== 'undefined' && typeof gsh !== 'undefined') {
+//                 //     var sync = Dygraph.synchronize(gsw, gst, gsh, {
+//                 //         selection: false,
+//                 //         zoom: true,
+//                 //         range: false
+//                 //     });
+//                 //     //gB_ecsf.updateOptions({dateWindow: gB_ecbsf.xAxisExtremes()})
+//                 //     gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
+//                 // }
+
+//             synctimeseries();
+
+//             change_cems();
+
+//             // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
+//             // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
+//             // g_firebuildup.updateOptions({ dateWindow: g_firebuildup.xAxisExtremes() })
+//             // g_fireweather.updateOptions({ dateWindow: g_fireweather.xAxisExtremes() })
+//             // g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() })
+//             // g_firespread.updateOptions({ dateWindow: g_firespread.xAxisExtremes() })
+//             // g_fireseverity.updateOptions({ dateWindow: g_fireseverity.xAxisExtremes() })
+// }
+
+// function synctimeseries() {
+//     // if (typeof g_cems !== 'undefined' && typeof g_duff !== 'undefined' && typeof g_firebuildup !== 'undefined' && typeof g_fireweather !== 'undefined' && typeof g_fuelmoisture !== 'undefined' && typeof g_firespread !== 'undefined' && typeof g_fireseverity !== 'undefined') {
+//     //     var sync = Dygraph.synchronize(g_cems, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
+//     //         // selection: false,
+//     //         selection: true,
+//     //         zoom: true,
+//     //         range: false
+//     //     });
+//     // };
+
+//     // change_cems();
+//     // change_duff();
+//     // change_firebuildup();
+//     // change_fireweather();
+//     // change_fuelmoisture();
+//     // change_firespread();
+//     // change_fireseverity();
+
+// }
 
 // // Load all timeseries at once (slow)
 // function drawtimeseries() {

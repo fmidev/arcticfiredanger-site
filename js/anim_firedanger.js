@@ -1158,7 +1158,7 @@ var ndmiLayer = L.tileLayer('');
 // var ndmiStaticLayer = L.tileLayer('');
 
 var overlayMaps = {
-    "CEMS Drought Code": cemsTimeLayer, //.addTo(map),
+    "Drought Code": cemsTimeLayer, //.addTo(map),
     "Duff Moisture Code": duffTimeLayer,
     "Fire Build-Up Index": firebuildupTimeLayer,
     "Fire Weather Index": fireweatherTimeLayer,
@@ -1182,7 +1182,7 @@ var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map
 
 map.on('baselayerchange', function (e) {
     switch (e.name) {
-        case "CEMS Drought Code": {
+        case "Drought Code": {
             map.removeLayer(ndmiLayer);
             map.removeLayer(ndmiStaticLayer);
 
@@ -1423,7 +1423,7 @@ for (i = 0; i <= perturbations; i++) {
 
 var dyGraphOptions_cems = {
     legend: "always",
-    ylabel: "CEMS Drought Code",
+    ylabel: "Drought Code",
     labels: label,
     series: labelstxt,
     // labels: ["date", "CEMS Drought Code"],

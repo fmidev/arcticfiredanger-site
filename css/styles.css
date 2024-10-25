@@ -80,6 +80,19 @@ header{
     /* text-align: center; */
 }
 
+#labels_timeseries {      
+    position: relative;
+    font-size: 10px;
+    width: 95%;
+    height: 80px;
+    text-align: left;
+    /*margin-left: 14px;
+    margin-left: 60px;*/
+    margin-right: auto;
+    margin-left: auto;
+    /* text-align: center; */
+}
+
 /* #labels_cems, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {
     position:relative;
     font-size: 15px;
@@ -267,6 +280,20 @@ header{
 #graphB .dygraph-axis-label.dygraph-axis-label-0 { color: rgb(255, 38, 0); }
 #graphB .dygraph-axis-label.dygraph-axis-label-2 { color: rgb(0, 97, 0); }
 */
+
+#graph_timeseries {
+    position: relative;
+    height: 500px;
+    width: 95%;
+    /*left: 20px; right: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#graph_timeseries .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_timeseries .dygraph-title { font-size: 18px; }
+#graph_timeseries .dygraph-ylabel { font-size: 12px; }
+
 
 #graph_cems, #graph_duff, #graph_firebuildup, #graph_fireweather, #graph_fuelmoisture, #graph_firespread, #graph_fireseverity {
     position: relative;

@@ -1158,7 +1158,7 @@ var ndmiLayer = L.tileLayer('');
 // var ndmiStaticLayer = L.tileLayer('');
 
 var overlayMaps = {
-    "CEMS Drought Code": cemsTimeLayer, //.addTo(map),
+    "Drought Code": cemsTimeLayer, //.addTo(map),
     "Duff Moisture Code": duffTimeLayer,
     "Fire Build-Up Index": firebuildupTimeLayer,
     "Fire Weather Index": fireweatherTimeLayer,
@@ -1182,7 +1182,7 @@ var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map
 
 map.on('baselayerchange', function (e) {
     switch (e.name) {
-        case "CEMS Drought Code": {
+        case "Drought Code": {
             map.removeLayer(ndmiLayer);
             map.removeLayer(ndmiStaticLayer);
 
@@ -1196,6 +1196,8 @@ map.on('baselayerchange', function (e) {
             map.removeControl(ndmiLegend);
 
             cemsLegend.addTo(this);
+
+            drawtimeseries_cems();
 
             break;
         }
@@ -1214,6 +1216,8 @@ map.on('baselayerchange', function (e) {
 
             duffLegend.addTo(this);
 
+            drawtimeseries_duff();
+
             break;
         }
         case "Fire Build-Up Index": {
@@ -1230,6 +1234,9 @@ map.on('baselayerchange', function (e) {
             map.removeControl(ndmiLegend);
 
             firebuildupLegend.addTo(this);
+
+            drawtimeseries_firebuildup();
+
             break;
         }
         case "Fire Weather Index": {
@@ -1246,6 +1253,8 @@ map.on('baselayerchange', function (e) {
             map.removeControl(ndmiLegend);
 
             fireweatherLegend.addTo(this);
+
+            drawtimeseries_fireweather();
 
             break;
         }
@@ -1264,6 +1273,8 @@ map.on('baselayerchange', function (e) {
 
             fuelmoistureLegend.addTo(this);
 
+            drawtimeseries_fuelmoisture();
+
             break;
         }
         case "Initial Fire Spread Index": {
@@ -1280,6 +1291,8 @@ map.on('baselayerchange', function (e) {
             map.removeControl(ndmiLegend);
 
             firespreadLegend.addTo(this);
+
+            drawtimeseries_firespread();
 
             break;
         }
@@ -1298,6 +1311,8 @@ map.on('baselayerchange', function (e) {
 
             fireseverityLegend.addTo(this);
 
+            drawtimeseries_fireseverity();
+
             break;
         }
         case "NDMI": {
@@ -1315,15 +1330,16 @@ map.on('baselayerchange', function (e) {
             ndmiLegend.addTo(this);
 
             plotgeotiff();
+
+            drawtimeseries_fireweather();
             
             break;
         }
     }
 });
 
-//var forecast = 0; // soilwetness
-var forecast = 1; // soil temperature
-
+// //var forecast = 0; // soilwetness
+// var forecast = 1; // soil temperature
 
 slider.oninput = function () {
     if (cemsTimeLayer) {
@@ -1423,13 +1439,13 @@ for (i = 0; i <= perturbations; i++) {
 
 var dyGraphOptions_cems = {
     legend: "always",
-    ylabel: "CEMS Drought Code",
+    ylabel: "Drought Code",
     labels: label,
     series: labelstxt,
     // labels: ["date", "CEMS Drought Code"],
     // series: {'CEMS Drought Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_cems",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1460,7 +1476,7 @@ var dyGraphOptions_duff = {
     // labels: ["date", "Duff Moisture Code"],
     // series: {'Duff Moisture Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_duff",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1491,7 +1507,7 @@ var dyGraphOptions_firebuildup = {
     // labels: ["date", "Fire Build-Up Index"],
     // series: {'Fire Build-Up Index': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_firebuildup",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1522,7 +1538,7 @@ var dyGraphOptions_fireweather = {
     // labels: ["date", "Fire Weather Index"],
     // series: {'Fire Weather Index': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_fireweather",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1553,7 +1569,7 @@ var dyGraphOptions_fuelmoisture = {
     // labels: ["date", "Fine Fuel Moisture Code"],
     // series: {'Fine Fuel Moisture Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_fuelmoisture",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1584,7 +1600,7 @@ var dyGraphOptions_firespread = {
     // labels: ["date", "Initial Fire Spread Index"],
     // series: {'Initial Fire Spread Index': { fillGraph: false, strokeWidth: 3 }},
     // // labelsDiv: "labels",
-    labelsDiv: "labels_firespread",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1615,7 +1631,7 @@ var dyGraphOptions_fireseverity = {
     // labels: ["date", "Fire Daily Severity Rating"],
     // series: {'Fire Daily Severity Rating': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_fireseverity",
+    labelsDiv: "labels_timeseries",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1830,7 +1846,7 @@ var dateString_ecbsf = endDate.getUTCFullYear().toString() + endMonth + '040000'
 var dateFixed = false;
 
 var graphLoad, graphTimer;
-var graphLoad2, graphLoad3, graphLoad4, graphLoad5, graphLoad6, graphLoad7;
+// var graphLoad2, graphLoad3, graphLoad4, graphLoad5, graphLoad6, graphLoad7;
 
 
 function onMapClick(e) {
@@ -1838,12 +1854,12 @@ function onMapClick(e) {
     //console.debug('click')
 
     if (graphLoad) { graphLoad.abort(); }
-    if (graphLoad2) { graphLoad2.abort(); }
-    if (graphLoad3) { graphLoad3.abort(); }
-    if (graphLoad4) { graphLoad4.abort(); }
-    if (graphLoad5) { graphLoad5.abort(); }
-    if (graphLoad6) { graphLoad6.abort(); }
-    if (graphLoad7) { graphLoad7.abort(); }
+    // if (graphLoad2) { graphLoad2.abort(); }
+    // if (graphLoad3) { graphLoad3.abort(); }
+    // if (graphLoad4) { graphLoad4.abort(); }
+    // if (graphLoad5) { graphLoad5.abort(); }
+    // if (graphLoad6) { graphLoad6.abort(); }
+    // if (graphLoad7) { graphLoad7.abort(); }
 
     if (graphTimer) { clearTimeout(graphTimer); }
 
@@ -1856,6 +1872,9 @@ function onMapClick(e) {
     latlonPoint = latlon.replace(" ", "").substring(7, latlon.length - 2);
     titleB.innerHTML = latlonTitle;
 
+    document.getElementById("graph_timeseries").innerHTML = "Loading...";
+    document.getElementById("graph_timeseries").style = "line-height: 240px;";
+
     // document.getElementById("graphB").innerHTML = "Loading...";
     // document.getElementById("graphB").style = "line-height: 120px;";
     // document.getElementById("graphsw").innerHTML = "Loading...";
@@ -1865,37 +1884,45 @@ function onMapClick(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
-    document.getElementById("labels_duff").innerHTML = "";
-    document.getElementById("graph_duff").innerHTML = "";
-    // document.getElementById("graph_duff").style = "line-height: 1;";
-    document.getElementById("labels_firebuildup").innerHTML = "";
-    document.getElementById("graph_firebuildup").innerHTML = "";
-    // document.getElementById("graph_firebuildup").style = "line-height: 1;";
-    document.getElementById("labels_fireweather").innerHTML = "";
-    document.getElementById("graph_fireweather").innerHTML = "";
-    // document.getElementById("graph_fireweather").style = "line-height: 1;";
-    document.getElementById("labels_fuelmoisture").innerHTML = "";
-    document.getElementById("graph_fuelmoisture").innerHTML = "";
-    // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
-    document.getElementById("labels_firespread").innerHTML = "";
-    document.getElementById("graph_firespread").innerHTML = "";
-    // document.getElementById("graph_firespread").style = "line-height: 1;";
-    document.getElementById("labels_fireseverity").innerHTML = "";
-    document.getElementById("graph_fireseverity").innerHTML = "";
-    // document.getElementById("graph_fireseverity").style = "line-height: 1;";
+    // document.getElementById("graph_cems").innerHTML = "Loading...";
+    // document.getElementById("graph_cems").style = "line-height: 240px;";
+    // document.getElementById("labels_duff").innerHTML = "";
+    // document.getElementById("graph_duff").innerHTML = "";
+    // // document.getElementById("graph_duff").style = "line-height: 1;";
+    // document.getElementById("labels_firebuildup").innerHTML = "";
+    // document.getElementById("graph_firebuildup").innerHTML = "";
+    // // document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    // document.getElementById("labels_fireweather").innerHTML = "";
+    // document.getElementById("graph_fireweather").innerHTML = "";
+    // // document.getElementById("graph_fireweather").style = "line-height: 1;";
+    // document.getElementById("labels_fuelmoisture").innerHTML = "";
+    // document.getElementById("graph_fuelmoisture").innerHTML = "";
+    // // document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    // document.getElementById("labels_firespread").innerHTML = "";
+    // document.getElementById("graph_firespread").innerHTML = "";
+    // // document.getElementById("graph_firespread").style = "line-height: 1;";
+    // document.getElementById("labels_fireseverity").innerHTML = "";
+    // document.getElementById("graph_fireseverity").innerHTML = "";
+    // // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
     graphTimer = setTimeout(function () {
-        document.getElementById("graph_cems").style.display = "block";
-        document.getElementById("graph_duff").style.display = "block";
-        document.getElementById("graph_firebuildup").style.display = "block";
-        document.getElementById("graph_fireweather").style.display = "block";
-        document.getElementById("graph_fuelmoisture").style.display = "block";
-        document.getElementById("graph_firespread").style.display = "block";
-        document.getElementById("graph_fireseverity").style.display = "block";        
+        // document.getElementById("graph_cems").style.display = "block";
+        // document.getElementById("graph_duff").style.display = "block";
+        // document.getElementById("graph_firebuildup").style.display = "block";
+        // document.getElementById("graph_fireweather").style.display = "block";
+        // document.getElementById("graph_fuelmoisture").style.display = "block";
+        // document.getElementById("graph_firespread").style.display = "block";
+        // document.getElementById("graph_fireseverity").style.display = "block";        
 
-        drawtimeseries();
+        if (map.hasLayer(cemsTimeLayer)) { drawtimeseries_cems(); }
+        else if (map.hasLayer(duffTimeLayer)) { drawtimeseries_duff(); }
+        else if (map.hasLayer(firebuildupTimeLayer)) { drawtimeseries_firebuildup(); }
+        else if (map.hasLayer(fireweatherTimeLayer)) { drawtimeseries_fireweather(); }
+        else if (map.hasLayer(fuelmoistureTimeLayer)) { drawtimeseries_fuelmoisture(); }
+        else if (map.hasLayer(firespreadTimeLayer)) { drawtimeseries_firespread(); }
+        else if (map.hasLayer(fireseverityTimeLayer)) { drawtimeseries_fireseverity(); }
+        else { drawtimeseries_fireweather(); } // Default for NDMI
+
     }, 2000);
 
 
@@ -1931,12 +1958,12 @@ function onLocationFound(e) {
     map.setView(e.latlng,14);
 
     if (graphLoad) { graphLoad.abort(); }
-    if (graphLoad2) { graphLoad2.abort(); }
-    if (graphLoad3) { graphLoad3.abort(); }
-    if (graphLoad4) { graphLoad4.abort(); }
-    if (graphLoad5) { graphLoad5.abort(); }
-    if (graphLoad6) { graphLoad6.abort(); }
-    if (graphLoad7) { graphLoad7.abort(); }
+    // if (graphLoad2) { graphLoad2.abort(); }
+    // if (graphLoad3) { graphLoad3.abort(); }
+    // if (graphLoad4) { graphLoad4.abort(); }
+    // if (graphLoad5) { graphLoad5.abort(); }
+    // if (graphLoad6) { graphLoad6.abort(); }
+    // if (graphLoad7) { graphLoad7.abort(); }
 
     if (graphTimer) { clearTimeout(graphTimer); }
 
@@ -1958,6 +1985,9 @@ function onLocationFound(e) {
     perturbations = 50;
     //if (latlonPoint == "Kajaani") { latlonPoint = "64.22728,27.72846"; }
 
+    document.getElementById("graph_timeseries").innerHTML = "Loading...";
+    document.getElementById("graph_timeseries").style = "line-height: 240px;";
+
     // document.getElementById("graphB").innerHTML = "Loading...";
     // document.getElementById("graphB").style = "line-height: 120px;";
     // document.getElementById("graphsw").innerHTML = "Loading...";
@@ -1967,8 +1997,8 @@ function onLocationFound(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    // document.getElementById("graph_cems").innerHTML = "Loading...";
+    // document.getElementById("graph_cems").style = "line-height: 240px;";
     // document.getElementById("graph_duff").innerHTML = "";
     // document.getElementById("graph_duff").style = "line-height: 1;";
     // document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2009,6 +2039,10 @@ function onLocationError(e) {
     // perturbations = 50;
     //if (latlonPoint == "Kajaani") { latlonPoint = "64.22728,27.72846"; }
 
+    document.getElementById("graph_timeseries").innerHTML = "Loading...";
+    document.getElementById("graph_timeseries").style = "line-height: 240px;";
+
+
     // document.getElementById("graphB").innerHTML = "Loading...";
     // document.getElementById("graphB").style = "line-height: 120px;";
     // document.getElementById("graphsw").innerHTML = "Loading...";
@@ -2018,8 +2052,9 @@ function onLocationError(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    // document.getElementById("graph_cems").innerHTML = "Loading...";
+    // document.getElementById("graph_cems").style = "line-height: 240px;";
+
     // document.getElementById("graph_duff").innerHTML = "";
     // document.getElementById("graph_duff").style = "line-height: 1;";
     // document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2033,7 +2068,7 @@ function onLocationError(e) {
     // document.getElementById("graph_fireseverity").innerHTML = "";
     // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
-    drawtimeseries();
+    drawtimeseries_fireweather();
 
     marker.setLatLng(map.getCenter()).addTo(map);
     circle.setLatLng(map.getCenter()).addTo(map);
@@ -2045,12 +2080,12 @@ function onLocationError(e) {
 function onPermalink() {
 
     if (graphLoad) { graphLoad.abort(); }
-    if (graphLoad2) { graphLoad2.abort(); }
-    if (graphLoad3) { graphLoad3.abort(); }
-    if (graphLoad4) { graphLoad4.abort(); }
-    if (graphLoad5) { graphLoad5.abort(); }
-    if (graphLoad6) { graphLoad6.abort(); }
-    if (graphLoad7) { graphLoad7.abort(); }
+    // if (graphLoad2) { graphLoad2.abort(); }
+    // if (graphLoad3) { graphLoad3.abort(); }
+    // if (graphLoad4) { graphLoad4.abort(); }
+    // if (graphLoad5) { graphLoad5.abort(); }
+    // if (graphLoad6) { graphLoad6.abort(); }
+    // if (graphLoad7) { graphLoad7.abort(); }
 
     if (graphTimer) { clearTimeout(graphTimer); }
 
@@ -2063,6 +2098,9 @@ function onPermalink() {
 
     titleB.innerHTML = latlonTitle;
 
+    document.getElementById("graph_timeseries").innerHTML = "Loading...";
+    document.getElementById("graph_timeseries").style = "line-height: 240px;";
+
     // document.getElementById("graphB").innerHTML = "Loading...";
     // document.getElementById("graphB").style = "line-height: 120px;";
     // document.getElementById("graphsw").innerHTML = "Loading...";
@@ -2072,8 +2110,8 @@ function onPermalink() {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    // document.getElementById("graph_cems").innerHTML = "Loading...";
+    // document.getElementById("graph_cems").style = "line-height: 240px;";
     // document.getElementById("graph_duff").innerHTML = "";
     // document.getElementById("graph_duff").style = "line-height: 1;";
     // document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2087,7 +2125,7 @@ function onPermalink() {
     // document.getElementById("graph_fireseverity").innerHTML = "";
     // document.getElementById("graph_fireseverity").style = "line-height: 1;";
 
-    drawtimeseries();
+    drawtimeseries_fireweather();
 
     marker.setLatLng(mappos.center).addTo(map);
     circle.setLatLng(mappos.center).addTo(map);
@@ -2162,73 +2200,73 @@ function timeserieclick(e, x, points) {
 // }
 
 
-function change_cems() {
-    if (document.getElementById('checkbox_cems').checked) {
-        document.getElementById("labels_cems").style.display = "block";
-        document.getElementById("graph_cems").style.display = "block";
-    } else {
-        document.getElementById("labels_cems").style.display = "none";
-        document.getElementById("graph_cems").style.display = "none";
-    }
-}
+// function change_cems() {
+//     if (document.getElementById('checkbox_cems').checked) {
+//         document.getElementById("labels_cems").style.display = "block";
+//         document.getElementById("graph_cems").style.display = "block";
+//     } else {
+//         document.getElementById("labels_cems").style.display = "none";
+//         document.getElementById("graph_cems").style.display = "none";
+//     }
+// }
 
-function change_duff() {
-    if (document.getElementById('checkbox_duff').checked) {
-        document.getElementById("labels_duff").style.display = "block";
-        document.getElementById("graph_duff").style.display = "block";
-    } else {
-        document.getElementById("labels_duff").style.display = "none";
-        document.getElementById("graph_duff").style.display = "none";
-    }
-}
+// function change_duff() {
+//     if (document.getElementById('checkbox_duff').checked) {
+//         document.getElementById("labels_duff").style.display = "block";
+//         document.getElementById("graph_duff").style.display = "block";
+//     } else {
+//         document.getElementById("labels_duff").style.display = "none";
+//         document.getElementById("graph_duff").style.display = "none";
+//     }
+// }
 
-function change_firebuildup() {
-    if (document.getElementById('checkbox_firebuildup').checked) {
-        document.getElementById("labels_firebuildup").style.display = "block";
-        document.getElementById("graph_firebuildup").style.display = "block";
-    } else {
-        document.getElementById("labels_firebuildup").style.display = "none";
-        document.getElementById("graph_firebuildup").style.display = "none";
-    }
-}
+// function change_firebuildup() {
+//     if (document.getElementById('checkbox_firebuildup').checked) {
+//         document.getElementById("labels_firebuildup").style.display = "block";
+//         document.getElementById("graph_firebuildup").style.display = "block";
+//     } else {
+//         document.getElementById("labels_firebuildup").style.display = "none";
+//         document.getElementById("graph_firebuildup").style.display = "none";
+//     }
+// }
 
-function change_fireweather() {
-    if (document.getElementById('checkbox_fireweather').checked) {
-        document.getElementById("labels_fireweather").style.display = "block";
-        document.getElementById("graph_fireweather").style.display = "block";
-    } else {
-        document.getElementById("labels_fireweather").style.display = "none";
-        document.getElementById("graph_fireweather").style.display = "none";
-    }
-}
+// function change_fireweather() {
+//     if (document.getElementById('checkbox_fireweather').checked) {
+//         document.getElementById("labels_fireweather").style.display = "block";
+//         document.getElementById("graph_fireweather").style.display = "block";
+//     } else {
+//         document.getElementById("labels_fireweather").style.display = "none";
+//         document.getElementById("graph_fireweather").style.display = "none";
+//     }
+// }
 
-function change_fuelmoisture() {
-    if (document.getElementById('checkbox_fuelmoisture').checked) {
-        document.getElementById("labels_fuelmoisture").style.display = "block";
-        document.getElementById("graph_fuelmoisture").style.display = "block";
-        if (typeof g_fuelmoisture !== 'undefined') { g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() }) }
-    } else {
-        document.getElementById("labels_fuelmoisture").style.display = "none";
-        document.getElementById("graph_fuelmoisture").style.display = "none";
-    }
-}
+// function change_fuelmoisture() {
+//     if (document.getElementById('checkbox_fuelmoisture').checked) {
+//         document.getElementById("labels_fuelmoisture").style.display = "block";
+//         document.getElementById("graph_fuelmoisture").style.display = "block";
+//         if (typeof g_fuelmoisture !== 'undefined') { g_fuelmoisture.updateOptions({ dateWindow: g_fuelmoisture.xAxisExtremes() }) }
+//     } else {
+//         document.getElementById("labels_fuelmoisture").style.display = "none";
+//         document.getElementById("graph_fuelmoisture").style.display = "none";
+//     }
+// }
 
-function change_firespread() {
-    if (document.getElementById('checkbox_firespread').checked) {
-        document.getElementById("labels_firespread").style.display = "block";
-        document.getElementById("graph_firespread").style.display = "block";
-    } else {
-        document.getElementById("labels_firespread").style.display = "none";
-        document.getElementById("graph_firespread").style.display = "none";
-    }
-}
+// function change_firespread() {
+//     if (document.getElementById('checkbox_firespread').checked) {
+//         document.getElementById("labels_firespread").style.display = "block";
+//         document.getElementById("graph_firespread").style.display = "block";
+//     } else {
+//         document.getElementById("labels_firespread").style.display = "none";
+//         document.getElementById("graph_firespread").style.display = "none";
+//     }
+// }
 
-function change_fireseverity() {
-    if (document.getElementById('checkbox_fireseverity').checked) {
-        document.getElementById("labels_fireseverity").style.display = "block";
-        document.getElementById("graph_fireseverity").style.display = "block";
-    } else {
-        document.getElementById("labels_fireseverity").style.display = "none";
-        document.getElementById("graph_fireseverity").style.display = "none";
-    }
-}
+// function change_fireseverity() {
+//     if (document.getElementById('checkbox_fireseverity').checked) {
+//         document.getElementById("labels_fireseverity").style.display = "block";
+//         document.getElementById("graph_fireseverity").style.display = "block";
+//     } else {
+//         document.getElementById("labels_fireseverity").style.display = "none";
+//         document.getElementById("graph_fireseverity").style.display = "none";
+//     }
+// }
