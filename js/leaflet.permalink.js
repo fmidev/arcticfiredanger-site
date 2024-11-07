@@ -2,7 +2,7 @@ L.Permalink = {
     //gets the map center, zoom-level and rotation from the URL if present, else uses default values
     getMapLocation: function (zoom, center) {
         'use strict';
-        zoom = (zoom || zoom === 0) ? zoom : 6;
+        zoom = (zoom || zoom === 0) ? zoom : 3;
         center = (center) ? center : [64.0, 27.0];
 
         if (window.location.hash !== '') {

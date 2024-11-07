@@ -165,7 +165,7 @@ var crs = new L.Proj.CRS(
 var map = L.map('map', {
     // crs: L.CRS.EPSG3857,
     crs: crs,
-    zoom: 3,
+    // zoom: 3,
     minZoom: 3,
     maxZoom: 16,
     fullscreenControl: false,
@@ -188,7 +188,7 @@ var map = L.map('map', {
     // center: [64, 27],
     // center: [90, 135],
     center: mappos.center,
-    // zoom: mappos.zoom
+    zoom: mappos.zoom
 /*    timeDimensionControlOptions: {
         //timeZones: ["Local"],
         playerOptions: {
@@ -197,7 +197,7 @@ var map = L.map('map', {
     }*/
 });
 
-// L.Permalink.setup(map);
+L.Permalink.setup(map);
 
 // load a tile layer GBIF polar
 // var gbif = L.tileLayer('https://tile.gbif.org/3575/omt/{z}/{x}/{y}@4x.png?style=osm-bright-en',
