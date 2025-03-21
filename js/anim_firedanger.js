@@ -940,7 +940,25 @@ var fireseverityLayerOptions = {
     zIndex: 20,
 };
 var fireseverityLayer = L.tileLayer.wms(smartWMS, fireseverityLayerOptions);
-var fireseverityTimeLayer = L.timeDimension.layer.wms(fireweatherLayer, {cache: 100});
+var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
+
+// // NDVI test
+// ndviWMS='https://sh.dataspace.copernicus.eu/ogc/wms/53c354c5-5603-4441-8d4c-02e9076af8a8?'
+// var fireseverityLayerOptions = {
+//     // crs: L.CRS.EPSG4326,
+//     version: '1.3.0',
+//     layers: 'NDVI',
+//     format: 'image/png',
+//     transparent: 'true',
+//     styles: 'default',
+//     //source: 'grid',
+//     opacity: 0.7,
+//     // maxZoom: 9,
+//     zIndex: 20,
+// };
+// var fireseverityLayer = L.tileLayer.wms(ndviWMS, fireseverityLayerOptions);
+// var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
+
 
 // var copernicusWMS = 'https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_TreeCoverDensity_2018/ImageServer/WMSServer?';
 
