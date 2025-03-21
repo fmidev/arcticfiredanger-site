@@ -942,15 +942,16 @@ var fireseverityLayerOptions = {
 var fireseverityLayer = L.tileLayer.wms(smartWMS, fireseverityLayerOptions);
 var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
 
-// // NDVI test
+// // MOISTURE_INDEX test
 // ndviWMS='https://sh.dataspace.copernicus.eu/ogc/wms/53c354c5-5603-4441-8d4c-02e9076af8a8?'
 // var fireseverityLayerOptions = {
 //     // crs: L.CRS.EPSG4326,
 //     version: '1.3.0',
-//     layers: 'NDVI',
+//     layers: 'MOISTURE_INDEX',
 //     format: 'image/png',
 //     transparent: 'true',
 //     styles: 'default',
+//     SHOWLOGO: 'false',
 //     //source: 'grid',
 //     opacity: 0.7,
 //     // maxZoom: 9,
@@ -1201,9 +1202,10 @@ var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map
 map.on('baselayerchange', function (e) {
     switch (e.name) {
         case "Drought Code": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
-
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
             // map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
@@ -1218,9 +1220,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Duff Moisture Code": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
-
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
             map.removeControl(cemsLegend);
             // map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
@@ -1235,8 +1238,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Fire Build-Up Index": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
 
             map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
@@ -1251,8 +1256,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Fire Weather Index": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
 
             map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
@@ -1268,8 +1275,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Fine Fuel Moisture Code": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
 
             map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
@@ -1285,8 +1294,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Initial Fire Spread Index": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
 
             map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
@@ -1302,8 +1313,10 @@ map.on('baselayerchange', function (e) {
             break;
         }
         case "Fire Daily Severity Rating": {
-            map.removeLayer(ndmiLayer);
-            map.removeLayer(ndmiStaticLayer);
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
 
             map.removeControl(cemsLegend);
             map.removeControl(duffLegend);
