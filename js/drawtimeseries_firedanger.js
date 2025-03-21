@@ -1,6 +1,6 @@
 function drawtimeseries() {
 
-    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
+    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + "," + param_cems_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
         function (data) {
             var graphdata_cems = [];
 
@@ -10,7 +10,7 @@ function drawtimeseries() {
                 for (j = 0; j <= perturbations; j++) {
                     graphdata_cems[i][j+1] = data[i][ensemblelist_cems[j]];
                 }
-                
+                graphdata_cems[i][perturbations+2] = data[i][param_cems_hist];                
             }
 
             if (!dateFixed && data.length > 0) {
@@ -40,7 +40,7 @@ function drawtimeseries() {
                 document.getElementById("graph_cems").innerHTML = "Error loading data";
             }
 
-            graphLoad2 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_duff + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad2 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_duff + "," + param_duff_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_duff) {
 
                     if (graphdata_duff.length > 0) {
@@ -57,7 +57,7 @@ function drawtimeseries() {
                     synctimeseries();
                 });
 
-            graphLoad3 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firebuildup + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad3 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firebuildup + "," + param_firebuildup_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_firebuildup) {
 
                     if (graphdata_firebuildup.length > 0) {
@@ -74,7 +74,7 @@ function drawtimeseries() {
                     synctimeseries();
                 });
 
-            graphLoad4 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad4 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireweather + "," + param_fireweather_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_fireweather) {
                     if (graphdata_fireweather.length > 0) {
                         g_fireweather = new Dygraph(
@@ -90,7 +90,7 @@ function drawtimeseries() {
                     synctimeseries();
                 });
 
-            graphLoad5 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fuelmoisture + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad5 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fuelmoisture + "," + param_fuelmoisture_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_fuelmoisture) {
                     if (graphdata_fuelmoisture.length > 0) {
                         g_fuelmoisture = new Dygraph(
@@ -106,7 +106,7 @@ function drawtimeseries() {
                     synctimeseries();
                 });
 
-            graphLoad6 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firespread + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad6 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_firespread + "," + param_firespread_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_firespread) {
                     if (graphdata_firespread.length > 0) {
                         g_firespread = new Dygraph(
@@ -122,7 +122,7 @@ function drawtimeseries() {
                     synctimeseries();
                 });
 
-            graphLoad7 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
+            graphLoad7 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_fireseverity + "," + param_fireseverity_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
                 function (graphdata_fireseverity) {
                     if (graphdata_fireseverity.length > 0) {
                         g_fireseverity = new Dygraph(

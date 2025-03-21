@@ -331,7 +331,7 @@ dateslider.onchange = function () {
     //      plotgeotiff();
     // }
 
-    if (map.hasLayer(ndmiStaticLayer)) {
+    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
@@ -371,7 +371,7 @@ function dateback() {
         //     plotgeotiff();
         // }
 
-        if (map.hasLayer(ndmiStaticLayer)) {
+        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
@@ -406,7 +406,7 @@ function datebackscrollIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (map.hasLayer(ndmiStaticLayer)) {
+        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
@@ -469,7 +469,7 @@ function dateforward() {
         //     plotgeotiff();
         // }
 
-        if (map.hasLayer(ndmiStaticLayer)) {
+        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
@@ -504,7 +504,7 @@ function dateforwardscrollIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (map.hasLayer(ndmiStaticLayer)) {
+        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
@@ -569,7 +569,7 @@ function datestopscrollfast() {
     //     //console.debug(repeatId)
     // }
 
-    if (map.hasLayer(ndmiStaticLayer)) {
+    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
@@ -616,7 +616,7 @@ function playButtonIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (map.hasLayer(ndmiStaticLayer)) {
+        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
@@ -1404,6 +1404,14 @@ const param_fuelmoisture = "FFMCODE:CEMS:5071:2:";
 const param_firespread = "INFSINX:CEMS:5071:2:";
 const param_fireseverity = "FDSRTE:CEMS:5071:2:";
 
+const param_cems_hist = "DRTCODE:ECFWI:26:1:0:0";
+const param_duff_hist = "DUFMCODE:ECFWI:26:1:0:0";
+const param_firebuildup_hist = "FBUPINX:ECFWI:26:1:0:0";
+const param_fireweather_hist = "FWINX:ECFWI:26:1:0:0";
+const param_fuelmoisture_hist = "FFMCODE:ECFWI:26:1:0:0";
+const param_firespread_hist = "INFSINX:ECFWI:26:1:0:0";
+const param_fireseverity_hist = "FDSRTE:ECFWI:26:1:0:0";
+
 
 const perturbations = 50;
 
@@ -1420,6 +1428,8 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_cems += "," + param_cems + i + ":0";
 }
+label[perturbations+2] = 'DROUGHT';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
 var dyGraphOptions_cems = {
     legend: "always",
@@ -1451,6 +1461,9 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_duff += "," + param_duff + i + ":0";
 }
+label[perturbations+2] = 'MOISTURE';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
+
 
 var dyGraphOptions_duff = {
     legend: "always",
@@ -1482,6 +1495,9 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_firebuildup += "," + param_firebuildup + i + ":0";
 }
+label[perturbations+2] = 'FBUILDUP';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
+
 
 var dyGraphOptions_firebuildup = {
     legend: "always",
@@ -1513,6 +1529,8 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_fireweather += "," + param_fireweather + i + ":0";
 }
+label[perturbations+2] = 'FWEATHER';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
 var dyGraphOptions_fireweather = {
     legend: "always",
@@ -1544,6 +1562,8 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_fuelmoisture += "," + param_fuelmoisture + i + ":0";
 }
+label[perturbations+2] = 'FUELMOIST';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
 var dyGraphOptions_fuelmoisture = {
     legend: "always",
@@ -1575,6 +1595,8 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_firespread += "," + param_firespread + i + ":0";
 }
+label[perturbations+2] = 'FSPREAD';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
 var dyGraphOptions_firespread = {
     legend: "always",
@@ -1606,6 +1628,8 @@ for (i = 0; i <= perturbations; i++) {
     labelstxt[label[i+1]]= { fillGraph: false };
     ensemble_fireseverity += "," + param_fireseverity + i + ":0";
 }
+label[perturbations+2] = 'FSEVERITY';
+labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
 var dyGraphOptions_fireseverity = {
     legend: "always",
@@ -2109,7 +2133,7 @@ function timeserieclick(e, x, points) {
     //     plotgeotiff();
     // }
 
-    if (map.hasLayer(ndmiStaticLayer)) {
+    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
