@@ -13,8 +13,8 @@ if (startDay < 10) {
 
 // var startMonth2 = now.getUTCMonth();
 // var startMonth2 = now.getUTCMonth() - 1;
-var startMonth2 = now.getUTCMonth() - 2;
-// var startMonth2 = 0; // Start from the beginning of the year
+// var startMonth2 = now.getUTCMonth() - 2;
+var startMonth2 = 0; // Start from the beginning of the year
 
 // if (startMonth2 < 10) {
 //     startMonth2 = '0' + startMonth2;
@@ -24,12 +24,15 @@ var startMonth2 = now.getUTCMonth() - 2;
 
 var startDate;
 
-if (now.getUTCDate() < 15) {
-    startDate = new Date(Date.UTC(startYear, startMonth2 - 1, 2));
-}
-else {
-    startDate = new Date(Date.UTC(startYear, startMonth2, 2));
-}
+// if (now.getUTCDate() < 15) {
+//     startDate = new Date(Date.UTC(startYear, startMonth2 - 1, 2));
+// }
+// else {
+//     startDate = new Date(Date.UTC(startYear, startMonth2, 2));
+// }
+
+startDate = new Date(Date.UTC(startYear, startMonth2, 1));
+
 
 var currentDate = new Date(Date.UTC(startYear, startMonth-1, startDay));
 
@@ -40,7 +43,8 @@ var startDateMonth = startDate.getUTCMonth() + 1;
 if (startDateMonth < 10) {
     startDateMonth = '0' + startDateMonth;
 }
-var dateString = startDateYear + '-' + startDateMonth + '-02/P7M';
+// var dateString = startDateYear + '-' + startDateMonth + '-02/P7M';
+var dateString = startDateYear + '-' + startDateMonth + '-01/P12M';
 
 // var startDateYear_prev = startDate.getUTCFullYear() - 1;
 // var dateString_prev = startDateYear_prev + '-' + startDateMonth + '-01/P12M';
@@ -52,7 +56,8 @@ var dateString = startDateYear + '-' + startDateMonth + '-02/P7M';
 
 var dateString_origintime = startYear.toString() + startMonth + startDay + '0000';
 
-var dateString_timeseries = startDateYear + startDateMonth + '020000';
+// var dateString_timeseries = startDateYear + startDateMonth + '020000';
+var dateString_timeseries = startDateYear + startDateMonth + '010000';
 
 
 // // smartmetDay = now.getUTCDate() + 10;
@@ -2093,18 +2098,20 @@ var center = L.circle(null, {
 
 var endDate = new Date();
 
-if (endDate.getUTCDate() < 15) {
-    endDate.setMonth(endDate.getUTCMonth() + 5);
-} else {
-    endDate.setMonth(endDate.getUTCMonth() + 5);
-}
+// if (endDate.getUTCDate() < 15) {
+//     endDate.setMonth(endDate.getUTCMonth() + 5);
+// } else {
+//     endDate.setMonth(endDate.getUTCMonth() + 5);
+// }
 
-var endMonth = endDate.getUTCMonth() + 1;
-if (endMonth < 10) {
-    endMonth = '0' + endMonth;
-}
-var dateString_ecbsf = endDate.getUTCFullYear().toString() + endMonth + '040000';
-// console.debug(dateString_ecbsf)
+// var endMonth = endDate.getUTCMonth() + 1;
+// if (endMonth < 10) {
+//     endMonth = '0' + endMonth;
+// }
+// var dateString_ecbsf = endDate.getUTCFullYear().toString() + endMonth + '040000';
+
+var dateString_ecbsf = endDate.getUTCFullYear().toString() + '12310000';
+
 
 // var startDate_timeseries = new Date();
 
@@ -2619,7 +2626,7 @@ function prevyear() {
     dateString_timeseries = sliderDate.getFullYear().toString() + '01010000';
     dateString_ecbsf = sliderDate.getFullYear().toString() + '12310000';
 
-    drawtimeseries();
+    redrawtimeseries();
 }
 
 function nextyear() {
@@ -2659,8 +2666,40 @@ function nextyear() {
     dateString_timeseries = sliderDate.getFullYear().toString() + '01010000';
     dateString_ecbsf = sliderDate.getFullYear().toString() + '12310000';
 
-    drawtimeseries();
+    redrawtimeseries();
 }
+
+function redrawtimeseries() {
+    if (graphLoad) { graphLoad.abort(); }
+    if (graphLoad2) { graphLoad2.abort(); }
+    if (graphLoad3) { graphLoad3.abort(); }
+    if (graphLoad4) { graphLoad4.abort(); }
+    if (graphLoad5) { graphLoad5.abort(); }
+    if (graphLoad6) { graphLoad6.abort(); }
+    if (graphLoad7) { graphLoad7.abort(); }
+
+    if (graphTimer) { clearTimeout(graphTimer); }
+
+    document.getElementById("graph_drought").innerHTML = "Loading...";
+    document.getElementById("graph_drought").style = "line-height: 240px;";
+    document.getElementById("graph_duff").innerHTML = "";
+    document.getElementById("graph_duff").style = "line-height: 1;";
+    document.getElementById("graph_firebuildup").innerHTML = "";
+    document.getElementById("graph_firebuildup").style = "line-height: 1;";
+    document.getElementById("graph_fireweather").innerHTML = "";
+    document.getElementById("graph_fireweather").style = "line-height: 1;";
+    document.getElementById("graph_fuelmoisture").innerHTML = "";
+    document.getElementById("graph_fuelmoisture").style = "line-height: 1;";
+    document.getElementById("graph_firespread").innerHTML = "";
+    document.getElementById("graph_firespread").style = "line-height: 1;";
+    document.getElementById("graph_fireseverity").innerHTML = "";
+    document.getElementById("graph_fireseverity").style = "line-height: 1;";
+
+    graphTimer = setTimeout(function () {
+        drawtimeseries();
+    }, 2000);
+}
+
 
 // function daysIntoYear(date){
 //     return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
