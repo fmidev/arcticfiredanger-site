@@ -67,7 +67,7 @@ header{
     padding-bottom: 10px;
 }
 
-#labels_cems, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {      
+#labels_drought, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {      
     position:relative;
     font-size: 10px;
     width: 95%;
@@ -93,7 +93,7 @@ header{
     /* text-align: center; */
 }
 
-/* #labels_cems, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {
+/* #labels_drought, #labels_duff, #labels_firebuildup, #labels_fireweather, #labels_fuelmoisture, #labels_firespread, #labels_fireseverity {
     position:relative;
     font-size: 15px;
     width: 95%;
@@ -303,7 +303,7 @@ header{
 #graph_timeseries .dygraph-ylabel { font-size: 12px; }
 
 
-#graph_cems, #graph_duff, #graph_firebuildup, #graph_fireweather, #graph_fuelmoisture, #graph_firespread, #graph_fireseverity {
+#graph_drought, #graph_duff, #graph_firebuildup, #graph_fireweather, #graph_fuelmoisture, #graph_firespread, #graph_fireseverity {
     position: relative;
     height: 200px;
     width: 95%;
@@ -314,7 +314,7 @@ header{
 }
 
 
-/* #graph_cems {
+/* #graph_drought {
     position: relative;
     height: 120px;
     width: 95%;
@@ -322,9 +322,9 @@ header{
     margin-bottom: 20px;
     text-align: center;
 } */
-#graph_cems .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
-#graph_cems .dygraph-title { font-size: 18px; }
-#graph_cems .dygraph-ylabel { font-size: 12px; }
+#graph_drought .dygraph-label { font-family: Helvetica, Arial, sans-serif; }
+#graph_drought .dygraph-title { font-size: 18px; }
+#graph_drought .dygraph-ylabel { font-size: 12px; }
 
 /* #graph_duff {
     position: relative;

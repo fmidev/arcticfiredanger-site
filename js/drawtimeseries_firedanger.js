@@ -1,16 +1,16 @@
 function drawtimeseries() {
 
-    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + "," + param_cems_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
+    graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_drought + "," + param_drought_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
         function (data) {
-            var graphdata_cems = [];
+            var graphdata_drought = [];
 
             for (i = 0; i < data.length; i++) {
-                graphdata_cems[i] = [];
-                graphdata_cems[i][0] = new Date(data[i][param_time]);
+                graphdata_drought[i] = [];
+                graphdata_drought[i][0] = new Date(data[i][param_time]);
                 for (j = 0; j <= perturbations; j++) {
-                    graphdata_cems[i][j+1] = data[i][ensemblelist_cems[j]];
+                    graphdata_drought[i][j+1] = data[i][ensemblelist_drought[j]];
                 }
-                graphdata_cems[i][perturbations+2] = data[i][param_cems_hist];                
+                graphdata_drought[i][perturbations+2] = data[i][param_drought_hist];                
             }
 
             if (!dateFixed && data.length > 0) {
@@ -28,16 +28,16 @@ function drawtimeseries() {
                 dateFixed = true;
             }
 
-            if (graphdata_cems.length > 0) {
-                g_cems = new Dygraph(
-                    document.getElementById("graph_cems"),
-                    // [graphdata_time, graphdata_cems],
-                    graphdata_cems,
-                    dyGraphOptions_cems
+            if (graphdata_drought.length > 0) {
+                g_drought = new Dygraph(
+                    document.getElementById("graph_drought"),
+                    // [graphdata_time, graphdata_drought],
+                    graphdata_drought,
+                    dyGraphOptions_drought
                 );
-                document.getElementById("graph_cems").style = "line-height: 1;";
+                document.getElementById("graph_drought").style = "line-height: 1;";
             } else {
-                document.getElementById("graph_cems").innerHTML = "Error loading data";
+                document.getElementById("graph_drought").innerHTML = "Error loading data";
             }
 
             graphLoad2 = $.get(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_duff + "," + param_duff_hist + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&source=grid&timeformat=sql&precision=full&separator=,&tz=utc",
@@ -150,7 +150,7 @@ function drawtimeseries() {
 
             synctimeseries();
 
-            // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
+            // g_drought.updateOptions({ dateWindow: g_drought.xAxisExtremes() })
             // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
             // g_firebuildup.updateOptions({ dateWindow: g_firebuildup.xAxisExtremes() })
             // g_fireweather.updateOptions({ dateWindow: g_fireweather.xAxisExtremes() })
@@ -164,8 +164,8 @@ function drawtimeseries() {
 }
 
 function synctimeseries() {
-    if (typeof g_cems !== 'undefined' && typeof g_duff !== 'undefined' && typeof g_firebuildup !== 'undefined' && typeof g_fireweather !== 'undefined' && typeof g_fuelmoisture !== 'undefined' && typeof g_firespread !== 'undefined' && typeof g_fireseverity !== 'undefined') {
-        var sync = Dygraph.synchronize(g_cems, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
+    if (typeof g_drought !== 'undefined' && typeof g_duff !== 'undefined' && typeof g_firebuildup !== 'undefined' && typeof g_fireweather !== 'undefined' && typeof g_fuelmoisture !== 'undefined' && typeof g_firespread !== 'undefined' && typeof g_fireseverity !== 'undefined') {
+        var sync = Dygraph.synchronize(g_drought, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
             // selection: false,
             selection: true,
             zoom: true,
@@ -177,13 +177,13 @@ function synctimeseries() {
 // // Load all timeseries at once (slow)
 // function drawtimeseries() {
 
-//     graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_cems + ensemble_duff + ensemble_firebuildup + ensemble_fireweather + ensemble_fuelmoisture + ensemble_firespread + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
+//     graphLoad = $.getJSON(smarttimeseries + "latlon=" + latlonPoint + "&param=" + param_time + ensemble_drought + ensemble_duff + ensemble_firebuildup + ensemble_fireweather + ensemble_fuelmoisture + ensemble_firespread + ensemble_fireseverity + "&starttime=" + dateString_timeseries + "&endtime=" + dateString_ecbsf + "&timestep=1440&format=json&source=grid&timeformat=xml&tz=utc",
 //         function (data) {
 
 //             // console.debug(data[param_time]);
 
 //             // var graphdata_time = [];
-//             var graphdata_cems = [];
+//             var graphdata_drought = [];
 //             var graphdata_duff = [];
 //             var graphdata_firebuildup = [];
 //             var graphdata_fireweather = [];
@@ -193,7 +193,7 @@ function synctimeseries() {
 
 //             for (i = 0; i < data.length; i++) {
 //                 // graphdata_time[i]=data[i][param_time];
-//                 // graphdata_cems[i]=data[i][param_cems];
+//                 // graphdata_drought[i]=data[i][param_drought];
 //                 // graphdata_duff[i]=data[i][param_duff];
 //                 // graphdata_firebuildup[i]=data[i][param_firebuildup];
 //                 // graphdata_fireweather[i]=data[i][param_fireweather];
@@ -201,7 +201,7 @@ function synctimeseries() {
 //                 // graphdata_firespread[i]=data[i][param_firespread];
 //                 // graphdata_fireseverity[i]=data[i][param_fireseverity];
 
-//                 // graphdata_cems[i]=[new Date(data[i][param_time]), data[i][param_cems]];
+//                 // graphdata_drought[i]=[new Date(data[i][param_time]), data[i][param_drought]];
 //                 // graphdata_duff[i]=[new Date(data[i][param_time]), data[i][param_duff]];
 //                 // graphdata_firebuildup[i]=[new Date(data[i][param_time]), data[i][param_firebuildup]];
 //                 // graphdata_fireweather[i]=[new Date(data[i][param_time]), data[i][param_fireweather]];
@@ -209,10 +209,10 @@ function synctimeseries() {
 //                 // graphdata_firespread[i]=[new Date(data[i][param_time]), data[i][param_firespread]];
 //                 // graphdata_fireseverity[i]=[new Date(data[i][param_time]), data[i][param_fireseverity]];
 
-//                 graphdata_cems[i] = [];
-//                 graphdata_cems[i][0] = new Date(data[i][param_time]);
+//                 graphdata_drought[i] = [];
+//                 graphdata_drought[i][0] = new Date(data[i][param_time]);
 //                 for (j = 0; j <= perturbations; j++) {
-//                     graphdata_cems[i][j+1] = data[i][ensemblelist_cems[j]];
+//                     graphdata_drought[i][j+1] = data[i][ensemblelist_drought[j]];
 //                 }
 
 //                 graphdata_duff[i] = [];
@@ -253,8 +253,8 @@ function synctimeseries() {
 
 //             }
 
-//             // console.debug([graphdata_time, graphdata_cems]);
-//             // console.debug(graphdata_cems);
+//             // console.debug([graphdata_time, graphdata_drought]);
+//             // console.debug(graphdata_drought);
 
 //             if (!dateFixed && data.length > 0) {
 //                 // Fix the last date of dateslider to timeseries data
@@ -271,16 +271,16 @@ function synctimeseries() {
 //                 dateFixed = true;
 //             }
 
-//             if (graphdata_cems.length > 0) {
-//                 g_cems = new Dygraph(
-//                     document.getElementById("graph_cems"),
-//                     // [graphdata_time, graphdata_cems],
-//                     graphdata_cems,
-//                     dyGraphOptions_cems
+//             if (graphdata_drought.length > 0) {
+//                 g_drought = new Dygraph(
+//                     document.getElementById("graph_drought"),
+//                     // [graphdata_time, graphdata_drought],
+//                     graphdata_drought,
+//                     dyGraphOptions_drought
 //                 );
-//                 document.getElementById("graph_cems").style = "line-height: 1;";
+//                 document.getElementById("graph_drought").style = "line-height: 1;";
 //             } else {
-//                 document.getElementById("graph_cems").innerHTML = "Error loading data";
+//                 document.getElementById("graph_drought").innerHTML = "Error loading data";
 //             }
 
 //             if (graphdata_duff.length > 0) {
@@ -365,14 +365,14 @@ function synctimeseries() {
 //                 //     gsw.updateOptions({ dateWindow: gsw.xAxisExtremes() })
 //                 // }
 
-//             var sync = Dygraph.synchronize(g_cems, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
+//             var sync = Dygraph.synchronize(g_drought, g_duff, g_firebuildup, g_fireweather, g_fuelmoisture, g_firespread, g_fireseverity, {
 //                 // selection: false,
 //                 selection: true,
 //                 zoom: true,
 //                 range: false
 //             });
 
-//             // g_cems.updateOptions({ dateWindow: g_cems.xAxisExtremes() })
+//             // g_drought.updateOptions({ dateWindow: g_drought.xAxisExtremes() })
 //             // g_duff.updateOptions({ dateWindow: g_duff.xAxisExtremes() })
 //             // g_firebuildup.updateOptions({ dateWindow: g_firebuildup.xAxisExtremes() })
 //             // g_fireweather.updateOptions({ dateWindow: g_fireweather.xAxisExtremes() })

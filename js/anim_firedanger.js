@@ -341,11 +341,17 @@ dateslider.onchange = function () {
     //      plotgeotiff();
     // }
 
-    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+    if (map.hasLayer(ndmiLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
             plotgeotiff();
+        }
+        if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+            || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+            && typeof ndmiStaticLayer !== 'undefined') {
+            map.removeLayer(ndmiStaticLayer);
+            ndmiPlotDateStr = '';
         }
     }
 
@@ -381,11 +387,17 @@ function dateback() {
         //     plotgeotiff();
         // }
 
-        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+        if (map.hasLayer(ndmiLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
                 plotgeotiff();
+            }
+            if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+                || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+                && typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiStaticLayer);
+                ndmiPlotDateStr = '';
             }
         }
     
@@ -416,11 +428,17 @@ function datebackscrollIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+        if (map.hasLayer(ndmiLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
                 plotgeotiff();
+            }
+            if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+                || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+                && typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiStaticLayer);
+                ndmiPlotDateStr = '';
             }
         }
     
@@ -479,11 +497,17 @@ function dateforward() {
         //     plotgeotiff();
         // }
 
-        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+        if (map.hasLayer(ndmiLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
                 plotgeotiff();
+            }
+            if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+                || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+                && typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiStaticLayer);
+                ndmiPlotDateStr = '';
             }
         }
     
@@ -514,11 +538,17 @@ function dateforwardscrollIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+        if (map.hasLayer(ndmiLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
                 plotgeotiff();
+            }
+            if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+                || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+                && typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiStaticLayer);
+                ndmiPlotDateStr = '';
             }
         }
     
@@ -579,11 +609,17 @@ function datestopscrollfast() {
     //     //console.debug(repeatId)
     // }
 
-    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+    if (map.hasLayer(ndmiLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
             plotgeotiff();
+        }
+        if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+            || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+            && typeof ndmiStaticLayer !== 'undefined') {
+            map.removeLayer(ndmiStaticLayer);
+            ndmiPlotDateStr = '';
         }
     }
 
@@ -626,11 +662,17 @@ function playButtonIntervalFunc() {
         //     plotgeotiff();
         // }
 
-        if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+        if (map.hasLayer(ndmiLayer)) {
             ndmiDateFunction()
             if (ndmiDateStr2 !== ndmiPlotDateStr) {
                 // map.removeLayer(ndmiStaticLayer);
                 plotgeotiff();
+            }
+            if ((sliderDate < new Date(sliderDate.getUTCFullYear(), 3, 16)
+                || sliderDate > new Date(sliderDate.getUTCFullYear(), 9, 15))
+                && typeof ndmiStaticLayer !== 'undefined') {
+                map.removeLayer(ndmiStaticLayer);
+                ndmiPlotDateStr = '';
             }
         }
     
@@ -1320,11 +1362,10 @@ var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map
 map.on('baselayerchange', function (e) {
     switch (e.name) {
         case "Drought Code": {
-
             droughtTimeLayer_hist.addTo(map);
             
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
             // map.removeControl(droughtLegend);
@@ -1336,13 +1377,24 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            // map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
+
             droughtLegend.addTo(this);
 
             break;
         }
         case "Duff Moisture Code": {
+            duffTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
             map.removeControl(droughtLegend);
@@ -1354,13 +1406,23 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            map.removeLayer(droughtTimeLayer_hist);
+            // map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
             duffLegend.addTo(this);
 
             break;
         }
         case "Fire Build-Up Index": {
+            firebuildupTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
 
@@ -1373,12 +1435,22 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            // map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
             firebuildupLegend.addTo(this);
             break;
         }
         case "Fire Weather Index": {
+            fireweatherTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
 
@@ -1391,13 +1463,23 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            // map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
             fireweatherLegend.addTo(this);
 
             break;
         }
         case "Fine Fuel Moisture Code": {
+            fuelmoistureTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
 
@@ -1410,13 +1492,23 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            // map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
             fuelmoistureLegend.addTo(this);
 
             break;
         }
         case "Initial Fire Spread Index": {
+            firespreadTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
 
@@ -1429,13 +1521,23 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            // map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
             firespreadLegend.addTo(this);
 
             break;
         }
         case "Fire Daily Severity Rating": {
+            fireseverityTimeLayer_hist.addTo(map);
+
             if (typeof ndmiStaticLayer !== 'undefined') {
-                map.removeLayer(ndmiLayer);
+                // map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
 
@@ -1447,6 +1549,14 @@ map.on('baselayerchange', function (e) {
             map.removeControl(firespreadLegend);
             // map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
+
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            // map.removeLayer(fireseverityTimeLayer_hist);
 
             fireseverityLegend.addTo(this);
 
@@ -1463,6 +1573,14 @@ map.on('baselayerchange', function (e) {
             map.removeControl(firespreadLegend);
             map.removeControl(fireseverityLegend);
             // map.removeControl(ndmiLegend);
+
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
 
             ndmiLegend.addTo(this);
 
@@ -2285,7 +2403,7 @@ function timeserieclick(e, x, points) {
     //     plotgeotiff();
     // }
 
-    if (typeof ndmiStaticLayer !== 'undefined' && map.hasLayer(ndmiStaticLayer)) {
+    if (map.hasLayer(ndmiLayer)) {
         ndmiDateFunction()
         if (ndmiDateStr2 !== ndmiPlotDateStr) {
             // map.removeLayer(ndmiStaticLayer);
@@ -2466,9 +2584,7 @@ function timeserieclick(e, x, points) {
 
 function prevyear() {
 
-    // console.debug(map.timeDimension.getAvailableTimes())
-
-    startDate = new Date(sliderDate.getFullYear() - 1, 1, 1)
+    startDate = new Date(sliderDate.getFullYear() - 1, 0, 1)
 
     let newTimes = [];
     newTimes[0] = Number(startDate);
@@ -2476,27 +2592,64 @@ function prevyear() {
         newTimes[i] = newTimes[i-1] + 24*60*60*1000;
     }
 
-    // console.debug(newTimes)
-
-
     map.timeDimension.setAvailableTimes(newTimes, 'replace');
 
-    // console.debug(map.timeDimension.getAvailableTimes())
-
     sliderDate.setFullYear(sliderDate.getFullYear() - 1);
-
-    // if (sliderDate < startDate) { sliderDate = startDate; }
 
     dateoutput.innerHTML = sliderDate.toLocaleDateString();
     map.timeDimension.setCurrentTime(sliderDate.getTime());
 
     dateslider.max = 366;
 
-    dateslider.value = daysIntoYear(sliderDate);
+    // dateslider.value = daysIntoYear(sliderDate);
+    dateslider.value = (sliderDate-startDate)/(24*60*60*1000);
 
-    // dateslider.value = (sliderDate-startDate)/(24*60*60*1000);
+    // If NDMI layer is checked, update it
+    if (map.hasLayer(ndmiLayer)
+        && sliderDate.getFullYear() >= 2016
+        && sliderDate <= now) {
+        plotgeotiff();
+    } else {
+        if (typeof ndmiStaticLayer !== 'undefined') {
+            map.removeLayer(ndmiStaticLayer);
+        }
+    }
 }
 
-function daysIntoYear(date){
-    return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+function nextyear() {
+
+    startDate = new Date(sliderDate.getFullYear() + 1, 0, 1)
+
+    let newTimes = [];
+    newTimes[0] = Number(startDate);
+    for (i = 1; i < 366; i++) {
+        newTimes[i] = newTimes[i-1] + 24*60*60*1000;
+    }
+
+    map.timeDimension.setAvailableTimes(newTimes, 'replace');
+
+    sliderDate.setFullYear(sliderDate.getFullYear() + 1);
+
+    dateoutput.innerHTML = sliderDate.toLocaleDateString();
+    map.timeDimension.setCurrentTime(sliderDate.getTime());
+
+    dateslider.max = 366;
+
+    // dateslider.value = daysIntoYear(sliderDate);
+    dateslider.value = (sliderDate-startDate)/(24*60*60*1000);
+
+    // If NDMI layer is checked, update it
+    if (map.hasLayer(ndmiLayer)
+        && sliderDate.getFullYear() >= 2016
+        && sliderDate <= now) {
+            plotgeotiff();
+    } else {
+        if (typeof ndmiStaticLayer !== 'undefined') {
+            map.removeLayer(ndmiStaticLayer);
+        }
+    }
 }
+
+// function daysIntoYear(date){
+//     return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+// }
