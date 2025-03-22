@@ -14,6 +14,7 @@ if (startDay < 10) {
 // var startMonth2 = now.getUTCMonth();
 // var startMonth2 = now.getUTCMonth() - 1;
 var startMonth2 = now.getUTCMonth() - 2;
+// var startMonth2 = 0; // Start from the beginning of the year
 
 // if (startMonth2 < 10) {
 //     startMonth2 = '0' + startMonth2;
@@ -21,11 +22,13 @@ var startMonth2 = now.getUTCMonth() - 2;
 
 // var startDate = new Date(Date.UTC(startYear, startMonth-1, startDay));
 
+var startDate;
+
 if (now.getUTCDate() < 15) {
-    var startDate = new Date(Date.UTC(startYear, startMonth2 - 1, 2));
+    startDate = new Date(Date.UTC(startYear, startMonth2 - 1, 2));
 }
 else {
-    var startDate = new Date(Date.UTC(startYear, startMonth2, 2));
+    startDate = new Date(Date.UTC(startYear, startMonth2, 2));
 }
 
 var currentDate = new Date(Date.UTC(startYear, startMonth-1, startDay));
@@ -38,6 +41,10 @@ if (startDateMonth < 10) {
     startDateMonth = '0' + startDateMonth;
 }
 var dateString = startDateYear + '-' + startDateMonth + '-02/P7M';
+
+// var startDateYear_prev = startDate.getUTCFullYear() - 1;
+// var dateString_prev = startDateYear_prev + '-' + startDateMonth + '-01/P12M';
+
 
 // var dateString = startYear + '-' + startMonth + '-' + startDay + 'T00:00:00Z/P7M';
 // var dateString = startYear + '-' + startMonth + '-' + startDay + '/P7M';
@@ -300,6 +307,7 @@ let ndmiDateStr1, ndmiDateStr2;
 
 plotgeotiff();
 
+// var timeDimensionYear = now.getUTCFullYear();
 
 var repeatId = 0;
 var dateforwardRepeatId = 0;
@@ -308,9 +316,11 @@ var datebackRepeatId = 0;
 dateslider.oninput = function () {
     clearInterval(playButtonRepeatId);
     //playButton.value = "Play";
+
     sliderDate = new Date(startDate);
     sliderDate.setUTCDate(sliderDate.getUTCDate() + Number(this.value));
     dateoutput.innerHTML = sliderDate.toLocaleDateString();
+
     //dateoutput.innerHTML = sliderDate.toDateString().substring(4);
     //map.timeDimension.setCurrentTime(sliderDate.getTime());
     /*
@@ -345,7 +355,7 @@ dateslider.onchange = function () {
         playButtonRepeatId = setInterval(playButtonIntervalFunc, 500);
         //console.debug('timeload')
     }
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -381,7 +391,7 @@ function dateback() {
     
         map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -416,7 +426,7 @@ function datebackscrollIntervalFunc() {
     
         map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-        if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+        if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -479,7 +489,7 @@ function dateforward() {
     
         map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -514,7 +524,7 @@ function dateforwardscrollIntervalFunc() {
     
         map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-        if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+        if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
         if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -581,7 +591,7 @@ function datestopscrollfast() {
     repeatId = 0;
     map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -626,7 +636,7 @@ function playButtonIntervalFunc() {
     
         map.timeDimension.setCurrentTime(sliderDate.getTime());
 
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -832,7 +842,7 @@ const smartWMS = smartmetserver + 'wms?';
 const smarttimeseries = smartmetserver + 'timeseries?';
 
 
-const cemsLayerOptions = {
+const droughtLayerOptions = {
     // crs: L.CRS.EPSG4326,
     version: '1.3.0',
     layers: 'gui:isobands:CEMS_DRTCODE',
@@ -845,11 +855,10 @@ const cemsLayerOptions = {
     zIndex: 20,
     // zIndex: 2,
 };
-var cemsLayer = L.tileLayer.wms(smartWMS, cemsLayerOptions);
+var droughtLayer = L.tileLayer.wms(smartWMS, droughtLayerOptions);
 //var temperatureTimeLayer = L.timeDimension.layer.wms(temperatureLayer, {cache: 100, updateTimeDimension: true});
-// let cemsTimeLayer = L.timeDimension.layer.wms(cemsLayer, {cache: 100, zIndex: 20});
-var cemsTimeLayer = L.timeDimension.layer.wms(cemsLayer, {cache: 100});
-
+// let droughtTimeLayer = L.timeDimension.layer.wms(droughtLayer, {cache: 100, zIndex: 20});
+var droughtTimeLayer = L.timeDimension.layer.wms(droughtLayer, {cache: 100});
 
 var duffLayerOptions = {
     // crs: L.CRS.EPSG4326,
@@ -865,7 +874,6 @@ var duffLayerOptions = {
 };
 var duffLayer = L.tileLayer.wms(smartWMS, duffLayerOptions);
 var duffTimeLayer = L.timeDimension.layer.wms(duffLayer, {cache: 100});
-
 
 var firebuildupLayerOptions = {
     // crs: L.CRS.EPSG4326,
@@ -942,6 +950,116 @@ var fireseverityLayerOptions = {
 var fireseverityLayer = L.tileLayer.wms(smartWMS, fireseverityLayerOptions);
 var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
 
+// HISTORICAL data
+
+const droughtLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_DRTCODE',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+    // zIndex: 2,
+};
+var droughtLayer_hist = L.tileLayer.wms(smartWMS, droughtLayerOptions_hist);
+//var temperatureTimeLayer = L.timeDimension.layer.wms(temperatureLayer, {cache: 100, updateTimeDimension: true});
+// let droughtTimeLayer = L.timeDimension.layer.wms(droughtLayer, {cache: 100, zIndex: 20});
+var droughtTimeLayer_hist = L.timeDimension.layer.wms(droughtLayer_hist, {cache: 100});
+
+var duffLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_DUFMCODE',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var duffLayer_hist = L.tileLayer.wms(smartWMS, duffLayerOptions_hist);
+var duffTimeLayer_hist = L.timeDimension.layer.wms(duffLayer_hist, {cache: 100});
+
+var firebuildupLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_FBUPINX',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var firebuildupLayer_hist = L.tileLayer.wms(smartWMS, firebuildupLayerOptions_hist);
+var firebuildupTimeLayer_hist = L.timeDimension.layer.wms(firebuildupLayer_hist, {cache: 100});
+
+var fireweatherLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_FWINX',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var fireweatherLayer_hist = L.tileLayer.wms(smartWMS, fireweatherLayerOptions_hist);
+var fireweatherTimeLayer_hist = L.timeDimension.layer.wms(fireweatherLayer_hist, {cache: 100});
+
+var fuelmoistureLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_FFMCODE',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var fuelmoistureLayer_hist = L.tileLayer.wms(smartWMS, fuelmoistureLayerOptions_hist);
+var fuelmoistureTimeLayer_hist = L.timeDimension.layer.wms(fuelmoistureLayer_hist, {cache: 100});
+
+var firespreadLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_INFSINX',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var firespreadLayer_hist = L.tileLayer.wms(smartWMS, firespreadLayerOptions_hist);
+var firespreadTimeLayer_hist = L.timeDimension.layer.wms(firespreadLayer_hist, {cache: 100});
+
+var fireseverityLayerOptions_hist = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'gui:isobands:ECFWI_FDSRTE',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    //source: 'grid',
+    opacity: 0.7,
+    // maxZoom: 9,
+    zIndex: 20,
+};
+var fireseverityLayer_hist = L.tileLayer.wms(smartWMS, fireseverityLayerOptions_hist);
+var fireseverityTimeLayer_hist = L.timeDimension.layer.wms(fireseverityLayer_hist, {cache: 100});
+
 // // MOISTURE_INDEX test
 // ndviWMS='https://sh.dataspace.copernicus.eu/ogc/wms/53c354c5-5603-4441-8d4c-02e9076af8a8?'
 // var fireseverityLayerOptions = {
@@ -980,7 +1098,7 @@ var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache:
 // //var temperatureTimeLayer = L.timeDimension.layer.wms(temperatureLayer, {cache: 100});
 
 
-var cemsLegend = L.control({
+var droughtLegend = L.control({
     position: 'bottomright'
 });
 
@@ -1018,7 +1136,7 @@ var ndmiLegend = L.control({
 
 const legendURL = smartWMS;
 
-cemsLegend.onAdd = function (map) {
+droughtLegend.onAdd = function (map) {
     var src = legendURL + 'REQUEST=GetLegendGraphic&VERSION=1.3.0&LAYER=gui:isobands:CEMS_DRTCODE&sld_version=1.1.0&style=&format=image/png';
     var div = L.DomUtil.create('div', 'info legend');
     div.style.width = '160px';
@@ -1177,7 +1295,7 @@ var ndmiLayer = L.tileLayer('');
 // var ndmiStaticLayer = L.tileLayer('');
 
 var overlayMaps = {
-    "Drought Code": cemsTimeLayer, //.addTo(map),
+    "Drought Code": droughtTimeLayer, //.addTo(map),
     "Duff Moisture Code": duffTimeLayer,
     "Fire Build-Up Index": firebuildupTimeLayer,
     "Fire Weather Index": fireweatherTimeLayer,
@@ -1202,11 +1320,14 @@ var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map
 map.on('baselayerchange', function (e) {
     switch (e.name) {
         case "Drought Code": {
+
+            droughtTimeLayer_hist.addTo(map);
+            
             if (typeof ndmiStaticLayer !== 'undefined') {
                 map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
-            // map.removeControl(cemsLegend);
+            // map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1215,7 +1336,7 @@ map.on('baselayerchange', function (e) {
             map.removeControl(fireseverityLegend);
             map.removeControl(ndmiLegend);
 
-            cemsLegend.addTo(this);
+            droughtLegend.addTo(this);
 
             break;
         }
@@ -1224,7 +1345,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiLayer);
                 map.removeLayer(ndmiStaticLayer);
             }
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             // map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1243,7 +1364,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiStaticLayer);
             }
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             // map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1261,7 +1382,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiStaticLayer);
             }
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             // map.removeControl(fireweatherLegend);
@@ -1280,7 +1401,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiStaticLayer);
             }
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1299,7 +1420,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiStaticLayer);
             }
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1318,7 +1439,7 @@ map.on('baselayerchange', function (e) {
                 map.removeLayer(ndmiStaticLayer);
             }
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1334,7 +1455,7 @@ map.on('baselayerchange', function (e) {
         case "NDMI": {
             // console.debug("NDMI overlayadd");
 
-            map.removeControl(cemsLegend);
+            map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
             map.removeControl(fireweatherLegend);
@@ -1357,9 +1478,9 @@ var forecast = 1; // soil temperature
 
 
 slider.oninput = function () {
-    if (cemsTimeLayer) {
+    if (droughtTimeLayer) {
         opacity = this.value;
-        cemsTimeLayer.setOpacity(this.value / 100);
+        droughtTimeLayer.setOpacity(this.value / 100);
         output.innerHTML = this.value + " %";
     }
     if (duffTimeLayer) {
@@ -1418,7 +1539,7 @@ var latlonPoint;
 }; */
 
 // const param_time = "utctime";
-// const param_cems = "DRTCODE:CEMS:5071:2:0:0";
+// const param_drought = "DRTCODE:CEMS:5071:2:0:0";
 // const param_duff = "DUFMCODE:CEMS:5071:2:0:0";
 // const param_firebuildup = "FBUPINX:CEMS:5071:2:0:0";
 // const param_fireweather = "FWINX:CEMS:5071:2:0:0";
@@ -1427,7 +1548,7 @@ var latlonPoint;
 // const param_fireseverity = "FDSRTE:CEMS:5071:2:0:0";
 
 const param_time = "utctime";
-const param_cems = "DRTCODE:CEMS:5071:2:";
+const param_drought = "DRTCODE:CEMS:5071:2:";
 const param_duff = "DUFMCODE:CEMS:5071:2:";
 const param_firebuildup = "FBUPINX:CEMS:5071:2:";
 const param_fireweather = "FWINX:CEMS:5071:2:";
@@ -1435,7 +1556,7 @@ const param_fuelmoisture = "FFMCODE:CEMS:5071:2:";
 const param_firespread = "INFSINX:CEMS:5071:2:";
 const param_fireseverity = "FDSRTE:CEMS:5071:2:";
 
-const param_cems_hist = "DRTCODE:ECFWI:26:1:0:0";
+const param_drought_hist = "DRTCODE:ECFWI:26:1:0:0";
 const param_duff_hist = "DUFMCODE:ECFWI:26:1:0:0";
 const param_firebuildup_hist = "FBUPINX:ECFWI:26:1:0:0";
 const param_fireweather_hist = "FWINX:ECFWI:26:1:0:0";
@@ -1446,31 +1567,31 @@ const param_fireseverity_hist = "FDSRTE:ECFWI:26:1:0:0";
 
 const perturbations = 50;
 
-var ensemblelist_cems = [];
+var ensemblelist_drought = [];
 for (i = 0; i <= perturbations; i++) {
-    ensemblelist_cems[i] = param_cems + i + ":0";
+    ensemblelist_drought[i] = param_drought + i + ":0";
 }
 
-var ensemble_cems = "";
+var ensemble_drought = "";
 var label = ["date"];
 var labelstxt = {'DROUGHT-0': { fillGraph: false }};
 for (i = 0; i <= perturbations; i++) {
     label[i+1] = 'DROUGHT-' + i ;
     labelstxt[label[i+1]]= { fillGraph: false };
-    ensemble_cems += "," + param_cems + i + ":0";
+    ensemble_drought += "," + param_drought + i + ":0";
 }
 label[perturbations+2] = 'DROUGHT';
 labelstxt[label[perturbations+2]]= { fillGraph: false, strokeWidth: 3, color: 'red' };
 
-var dyGraphOptions_cems = {
+var dyGraphOptions_drought = {
     legend: "always",
     ylabel: "Drought Code",
     labels: label,
     series: labelstxt,
-    // labels: ["date", "CEMS Drought Code"],
-    // series: {'CEMS Drought Code': { fillGraph: false, strokeWidth: 3 }},
+    // labels: ["date", "drought Drought Code"],
+    // series: {'drought Drought Code': { fillGraph: false, strokeWidth: 3 }},
     // labelsDiv: "labels",
-    labelsDiv: "labels_cems",
+    labelsDiv: "labels_drought",
     // axes: {
     //     y: { valueRange: [-0.0, 1.01] },
     // },
@@ -1920,8 +2041,8 @@ function onMapClick(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    document.getElementById("graph_drought").innerHTML = "Loading...";
+    document.getElementById("graph_drought").style = "line-height: 240px;";
     document.getElementById("graph_duff").innerHTML = "";
     document.getElementById("graph_duff").style = "line-height: 1;";
     document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2008,8 +2129,8 @@ function onLocationFound(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    document.getElementById("graph_drought").innerHTML = "Loading...";
+    document.getElementById("graph_drought").style = "line-height: 240px;";
     document.getElementById("graph_duff").innerHTML = "";
     document.getElementById("graph_duff").style = "line-height: 1;";
     document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2059,8 +2180,8 @@ function onLocationError(e) {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    document.getElementById("graph_drought").innerHTML = "Loading...";
+    document.getElementById("graph_drought").style = "line-height: 240px;";
     document.getElementById("graph_duff").innerHTML = "";
     document.getElementById("graph_duff").style = "line-height: 1;";
     document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2113,8 +2234,8 @@ function onPermalink() {
     // document.getElementById("graphst").innerHTML = "";
     // document.getElementById("graphst").style = "line-height: 1;";
 
-    document.getElementById("graph_cems").innerHTML = "Loading...";
-    document.getElementById("graph_cems").style = "line-height: 240px;";
+    document.getElementById("graph_drought").innerHTML = "Loading...";
+    document.getElementById("graph_drought").style = "line-height: 240px;";
     document.getElementById("graph_duff").innerHTML = "";
     document.getElementById("graph_duff").style = "line-height: 1;";
     document.getElementById("graph_firebuildup").innerHTML = "";
@@ -2176,7 +2297,7 @@ function timeserieclick(e, x, points) {
 
     dateslider.value = (sliderDate-startDate)/(24*60*60*1000);
 
-    if (typeof g_cems !== 'undefined') { g_cems.updateOptions({underlayCallback: timeseriedateline}) };
+    if (typeof g_drought !== 'undefined') { g_drought.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_duff !== 'undefined') {g_duff.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_firebuildup !== 'undefined') {g_firebuildup.updateOptions({underlayCallback: timeseriedateline}) };
     if (typeof g_fireweather !== 'undefined') {g_fireweather.updateOptions({underlayCallback: timeseriedateline}) };
@@ -2203,13 +2324,13 @@ function timeserieclick(e, x, points) {
 // }
 
 
-// function change_cems() {
-//     if (document.getElementById('checkbox_cems').checked) {
-//         document.getElementById("labels_cems").style.display = "block";
-//         document.getElementById("graph_cems").style.display = "block";
+// function change_drought() {
+//     if (document.getElementById('checkbox_drought').checked) {
+//         document.getElementById("labels_drought").style.display = "block";
+//         document.getElementById("graph_drought").style.display = "block";
 //     } else {
-//         document.getElementById("labels_cems").style.display = "none";
-//         document.getElementById("graph_cems").style.display = "none";
+//         document.getElementById("labels_drought").style.display = "none";
+//         document.getElementById("graph_drought").style.display = "none";
 //     }
 // }
 
@@ -2273,13 +2394,13 @@ function timeserieclick(e, x, points) {
 //     }
 // }
 
-// function change_cems() {
-//     if (document.getElementById('checkbox_cems').checked) {
-//         $(document.getElementById("labels_cems")).show();
-//         $(document.getElementById("graph_cems")).show();
+// function change_drought() {
+//     if (document.getElementById('checkbox_drought').checked) {
+//         $(document.getElementById("labels_drought")).show();
+//         $(document.getElementById("graph_drought")).show();
 //     } else {
-//         $(document.getElementById("labels_cems")).hide();
-//         $(document.getElementById("graph_cems")).hide();
+//         $(document.getElementById("labels_drought")).hide();
+//         $(document.getElementById("graph_drought")).hide();
 //     }
 // }
 
@@ -2343,3 +2464,39 @@ function timeserieclick(e, x, points) {
 //     }
 // }
 
+function prevyear() {
+
+    // console.debug(map.timeDimension.getAvailableTimes())
+
+    startDate = new Date(sliderDate.getFullYear() - 1, 1, 1)
+
+    let newTimes = [];
+    newTimes[0] = Number(startDate);
+    for (i = 1; i < 366; i++) {
+        newTimes[i] = newTimes[i-1] + 24*60*60*1000;
+    }
+
+    // console.debug(newTimes)
+
+
+    map.timeDimension.setAvailableTimes(newTimes, 'replace');
+
+    // console.debug(map.timeDimension.getAvailableTimes())
+
+    sliderDate.setFullYear(sliderDate.getFullYear() - 1);
+
+    // if (sliderDate < startDate) { sliderDate = startDate; }
+
+    dateoutput.innerHTML = sliderDate.toLocaleDateString();
+    map.timeDimension.setCurrentTime(sliderDate.getTime());
+
+    dateslider.max = 366;
+
+    dateslider.value = daysIntoYear(sliderDate);
+
+    // dateslider.value = (sliderDate-startDate)/(24*60*60*1000);
+}
+
+function daysIntoYear(date){
+    return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+}

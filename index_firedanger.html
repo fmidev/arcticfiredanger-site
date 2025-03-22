@@ -44,6 +44,10 @@
                     <input type="checkbox" id="dynamic-checkbox" onchange="changedynamic()">
                 </label>
             </div> -->
+            <div id="prev-year">
+                <input type="button" value="Previous year" onclick="prevyear()">
+            </div>
+
             <div id="date-control">
                 <input id="test" type="button" value="<<"  
                     onmousedown="datebackscrollfast()" onmouseup="datestopscrollfast()" onmouseleave="datestopscrollfast()" 
@@ -64,6 +68,9 @@
                 <div id="play-button" style="text-align:center; vertical-align:middle; width: 50px; display: inline-block;">
                     <input id="playbutton" type="button" value="Play" onclick="playbuttonfunc()">
                 </div>
+            </div>
+            <div id="next-year">
+                <input type="button" value="Next year" onclick="nextyear()">
             </div>
         </div>
         <div id="map" class="map">

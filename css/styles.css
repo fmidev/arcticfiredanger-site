@@ -118,6 +118,14 @@ header{
     vertical-align: middle;
 }
 
+#prev-year {
+    float: left; 
+}
+
+#next-year {
+    float: right; 
+}
+
 .timeseries-table td {
     padding-right: 10px;
 }
