@@ -2614,6 +2614,12 @@ function prevyear() {
             map.removeLayer(ndmiStaticLayer);
         }
     }
+
+    // Timeseries
+    dateString_timeseries = sliderDate.getFullYear().toString() + '01010000';
+    dateString_ecbsf = sliderDate.getFullYear().toString() + '12310000';
+
+    drawtimeseries();
 }
 
 function nextyear() {
@@ -2648,6 +2654,12 @@ function nextyear() {
             map.removeLayer(ndmiStaticLayer);
         }
     }
+
+    // Timeseries
+    dateString_timeseries = sliderDate.getFullYear().toString() + '01010000';
+    dateString_ecbsf = sliderDate.getFullYear().toString() + '12310000';
+
+    drawtimeseries();
 }
 
 // function daysIntoYear(date){
