@@ -997,6 +997,26 @@ var fireseverityLayerOptions = {
 var fireseverityLayer = L.tileLayer.wms(smartWMS, fireseverityLayerOptions);
 var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
 
+// MOISTURE_INDEX test
+ndmiglobalWMS='https://sh.dataspace.copernicus.eu/ogc/wms/53c354c5-5603-4441-8d4c-02e9076af8a8?'
+
+var ndmiglobalLayerOptions = {
+    // crs: L.CRS.EPSG4326,
+    version: '1.3.0',
+    layers: 'MOISTURE_INDEX',
+    format: 'image/png',
+    transparent: 'true',
+    styles: 'default',
+    SHOWLOGO: 'false',
+    //source: 'grid',
+    opacity: 0.7,
+    minZoom: 9,
+    zIndex: 20,
+    attribution: 'NDMI Global / Source: <a href=https://www.copernicus.eu/en>Copernicus</a>'
+};
+var ndmiglobalLayer = L.tileLayer.wms(ndmiglobalWMS, ndmiglobalLayerOptions);
+var ndmiglobalTimeLayer = L.timeDimension.layer.wms(ndmiglobalLayer, {cache: 100});
+
 // HISTORICAL data
 
 const droughtLayerOptions_hist = {
@@ -1106,24 +1126,6 @@ var fireseverityLayerOptions_hist = {
 };
 var fireseverityLayer_hist = L.tileLayer.wms(smartWMS, fireseverityLayerOptions_hist);
 var fireseverityTimeLayer_hist = L.timeDimension.layer.wms(fireseverityLayer_hist, {cache: 100});
-
-// // MOISTURE_INDEX test
-// ndviWMS='https://sh.dataspace.copernicus.eu/ogc/wms/53c354c5-5603-4441-8d4c-02e9076af8a8?'
-// var fireseverityLayerOptions = {
-//     // crs: L.CRS.EPSG4326,
-//     version: '1.3.0',
-//     layers: 'MOISTURE_INDEX',
-//     format: 'image/png',
-//     transparent: 'true',
-//     styles: 'default',
-//     SHOWLOGO: 'false',
-//     //source: 'grid',
-//     opacity: 0.7,
-//     // maxZoom: 9,
-//     zIndex: 20,
-// };
-// var fireseverityLayer = L.tileLayer.wms(ndviWMS, fireseverityLayerOptions);
-// var fireseverityTimeLayer = L.timeDimension.layer.wms(fireseverityLayer, {cache: 100});
 
 
 // var copernicusWMS = 'https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_TreeCoverDensity_2018/ImageServer/WMSServer?';
@@ -1349,7 +1351,10 @@ var overlayMaps = {
     "Fine Fuel Moisture Code": fuelmoistureTimeLayer,
     "Initial Fire Spread Index": firespreadTimeLayer,
     "Fire Daily Severity Rating": fireseverityTimeLayer,
-    "NDMI": ndmiLayer.addTo(map),
+    "NDMI Finland": ndmiLayer.addTo(map),
+    // "NDMI Global (zoom level ≥ 9)": ndmiglobalTimeLayer,
+    // "NDMI Global (zoom ≥ 9)": ndmiglobalTimeLayer,
+    "NDMI Global": ndmiglobalTimeLayer,
 };
 
 ndmiLegend.addTo(map);
@@ -1362,7 +1367,13 @@ ndmiLegend.addTo(map);
 
 // var lcontrol = L.control.layers(baseMaps, overlayMaps).addTo(map);
 // var lcontrol = L.control.layers(baseMaps,'',{ collapsed: false } ).addTo(map);
-var lcontrol2 = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map);
+var lcontrol = L.control.layers(overlayMaps,'',{ collapsed: false } ).addTo(map);
+
+// if (map.getZoom() < 9) {
+//     lcontrol._baseLayersList.children[8].style.color = "rgb(190, 190, 190)";
+// } else {
+//     lcontrol._baseLayersList.children[8].style.color = "initial";
+// }
 
 map.on('baselayerchange', function (e) {
     switch (e.name) {
@@ -1389,7 +1400,6 @@ map.on('baselayerchange', function (e) {
             map.removeLayer(fuelmoistureTimeLayer_hist);
             map.removeLayer(firespreadTimeLayer_hist);
             map.removeLayer(fireseverityTimeLayer_hist);
-
 
             droughtLegend.addTo(this);
 
@@ -1567,9 +1577,7 @@ map.on('baselayerchange', function (e) {
 
             break;
         }
-        case "NDMI": {
-            // console.debug("NDMI overlayadd");
-
+        case "NDMI Finland": {
             map.removeControl(droughtLegend);
             map.removeControl(duffLegend);
             map.removeControl(firebuildupLegend);
@@ -1593,12 +1601,44 @@ map.on('baselayerchange', function (e) {
             
             break;
         }
+        // case "NDMI Global (zoom level ≥ 9)": {
+        // case "NDMI Global (zoom ≥ 9)": {
+        case "NDMI Global": {
+
+            if (typeof ndmiStaticLayer !== 'undefined') {
+                // map.removeLayer(ndmiLayer);
+                map.removeLayer(ndmiStaticLayer);
+            }
+
+            map.removeControl(droughtLegend);
+            map.removeControl(duffLegend);
+            map.removeControl(firebuildupLegend);
+            map.removeControl(fireweatherLegend);
+            map.removeControl(fuelmoistureLegend);
+            map.removeControl(firespreadLegend);
+            map.removeControl(fireseverityLegend);
+            // map.removeControl(ndmiLegend);
+
+            map.removeLayer(droughtTimeLayer_hist);
+            map.removeLayer(duffTimeLayer_hist);
+            map.removeLayer(firebuildupTimeLayer_hist);
+            map.removeLayer(fireweatherTimeLayer_hist);
+            map.removeLayer(fuelmoistureTimeLayer_hist);
+            map.removeLayer(firespreadTimeLayer_hist);
+            map.removeLayer(fireseverityTimeLayer_hist);
+
+            ndmiLegend.addTo(this);
+
+            if (map.getZoom() < 9) {
+                // map.setZoom(9);
+                // map.setView([lat, lon], 9);
+                map.flyTo([lat, lon], 9);
+            }
+            
+            break;
+        }
     }
 });
-
-//var forecast = 0; // soilwetness
-var forecast = 1; // soil temperature
-
 
 slider.oninput = function () {
     if (droughtTimeLayer) {
@@ -1636,6 +1676,11 @@ slider.oninput = function () {
         fireseverityTimeLayer.setOpacity(this.value / 100);
         output.innerHTML = this.value + " %";
     }
+    if (ndmiglobalTimeLayer) {
+        opacity = this.value;
+        ndmiglobalTimeLayer.setOpacity(this.value / 100);
+        output.innerHTML = this.value + " %";
+    }
 }
 
 slider.onchange = function () {
@@ -1653,6 +1698,14 @@ slider.onchange = function () {
         plotgeotiff();
     }
 }
+
+// map.on('zoomend', function (e) {
+//     if (map.getZoom() < 9) {
+//         lcontrol._baseLayersList.children[8].style.color = "rgb(190, 190, 190)";
+//     } else {
+//         lcontrol._baseLayersList.children[8].style.color = "initial";
+//     }
+// });
 
 //var latlonPoint = 'Kajaani';
 var latlonPoint;
@@ -2126,13 +2179,14 @@ var dateString_ecbsf = endDate.getUTCFullYear().toString() + '12310000';
 // var dateString_timeseries = startDate_timeseries.getUTCFullYear().toString() + startMonth_timeseries + '020000';
 
 
-
+// // undisable the NDMI global layer
+// lcontrol._layerControlInputs[8].disabled = false;
+// // lcontrol._update();
 
 var dateFixed = false;
 
 var graphLoad, graphTimer;
 var graphLoad2, graphLoad3, graphLoad4, graphLoad5, graphLoad6, graphLoad7;
-
 
 function onMapClick(e) {
 
@@ -2195,12 +2249,15 @@ function onMapClick(e) {
     //if (map.getZoom() < 12) { map.setView(e.latlng, map.getZoom() + 2) }
     //else if (map.getZoom() == 12) { map.setView(e.latlng, map.getZoom() + 1) }
 
-    if (map.getZoom() < 11) { map.setView(e.latlng, map.getZoom() + 3) }
+    if (map.hasLayer(ndmiglobalTimeLayer) && map.getZoom() < 9) { 
+        map.flyTo(e.latlng, 9) 
+    }
+    else if (map.getZoom() < 11) { map.setView(e.latlng, map.getZoom() + 3) }
     else if (map.getZoom() == 11) { map.setView(e.latlng, map.getZoom() + 2) }
     else if (map.getZoom() == 12) { map.setView(e.latlng, map.getZoom() + 1) }
     else { map.setView(e.latlng) }
 
-    maastokarttaAreaFunction(lat,lon);
+    // maastokarttaAreaFunction(lat,lon);
 
 }
 
@@ -2275,7 +2332,7 @@ function onLocationFound(e) {
     marker.setLatLng(e.latlng).addTo(map);
     circle.setLatLng(e.latlng).addTo(map);
 
-    maastokarttaAreaFunction(lat,lon);
+    // maastokarttaAreaFunction(lat,lon);
 
 }
 
@@ -2325,7 +2382,7 @@ function onLocationError(e) {
     marker.setLatLng(map.getCenter()).addTo(map);
     circle.setLatLng(map.getCenter()).addTo(map);
 
-    maastokarttaAreaFunction(lat,lon);
+    // maastokarttaAreaFunction(lat,lon);
 
 }
 
@@ -2379,7 +2436,7 @@ function onPermalink() {
     marker.setLatLng(mappos.center).addTo(map);
     circle.setLatLng(mappos.center).addTo(map);
 
-    maastokarttaAreaFunction(lat,lon);
+    // maastokarttaAreaFunction(lat,lon);
 }
 
 map.on('click', onMapClick);
