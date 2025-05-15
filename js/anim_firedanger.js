@@ -882,8 +882,8 @@ var opacity = slider.value;
 
 // var smartmetserver = 'https://desm.harvesterseasons.com/';
 
-const smartmetserver = 'http://firedanger.nsdc.fmi.fi:8080/';
-// const smartmetserver = 'https://firedanger.nsdc.fmi.fi/';
+// const smartmetserver = 'http://firedanger.nsdc.fmi.fi:8080/';
+const smartmetserver = 'https://firedanger.nsdc.fmi.fi/';
 
 const smartWMS = smartmetserver + 'wms?';
 const smarttimeseries = smartmetserver + 'timeseries?';
